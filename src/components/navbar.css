@@ -1,0 +1,33 @@
+
+nav {
+  background-color: #727272; 
+  padding: 10px 20px;
+}
+
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style each list item */
+nav ul li {
+  margin-right: 20px; /* Space between links */
+}
+
+/* Style the links */
+nav ul li a {
+  color: white; /* Text color */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for links */
+nav ul li a:hover {
+  color: #ddd; /* Change color on hover */
+}
