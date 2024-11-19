@@ -1,110 +1,27 @@
-// import React, { useEffect, useRef } from 'react'
-
-// function make2DArray(rows, cols) {
-//     let arr = new Array(rows)
-//     for (let i = 0; i < rows; i++) {
-//         arr[i] = new Array(cols)
-//         for (let j = 0; j < cols; j++) {
-//             arr[i][j] = 0 // Initialize with 0
-//         }
-//     }
-//     return arr
-// }
-
-// export default function TheCanvas({ width, height, resolution, brushColor }) {
-//     const canvasRef = useRef(null)
-//     const gridRef = useRef(null)
-//     const isDrawing = useRef(false)
-
-//     useEffect(() => {
-//         const canvas = canvasRef.current
-//         const context = canvas.getContext('2d')
-//         const rows = Math.floor(height / resolution)
-//         const cols = Math.floor(width / resolution)
-//         const grid = make2DArray(rows, cols)
-//         gridRef.current = grid
-
-//         // Set canvas background to red
-//         context.fillStyle = 'white'
-//         context.fillRect(0, 0, canvas.width, canvas.height)
-
-//         // Draw grid
-//         context.strokeStyle = 'lightgray'
-//         context.beginPath()
-//         for (let x = 0; x <= canvas.width; x += resolution) {
-//             context.moveTo(x, 0)
-//             context.lineTo(x, canvas.height)
-//         }
-//         for (let y = 0; y <= canvas.height; y += resolution) {
-//             context.moveTo(0, y)
-//             context.lineTo(canvas.width, y)
-//         }
-//         context.stroke()
-//     }, [width, height, resolution])
-
-//     useEffect(() => {
-//         const canvas = canvasRef.current
-//         const context = canvas.getContext('2d')
-
-//         const handleMouseDown = (event) => {
-//             isDrawing.current = true
-//             draw(event)
-//         }
-
-//         const handleMouseMove = (event) => {
-//             if (isDrawing.current) {
-//                 draw(event)
-//             }
-//         }
-
-//         const handleMouseUp = () => {
-//             isDrawing.current = false
-//         }
-
-//         const handleMouseLeave = () => {
-//             isDrawing.current = false
-//         }
-
-//         const draw = (event) => {
-//             const rect = canvas.getBoundingClientRect()
-//             const x = event.clientX - rect.left
-//             const y = event.clientY - rect.top
-//             const col = Math.floor(x / resolution)
-//             const row = Math.floor(y / resolution)
-//             if (gridRef.current[row] && gridRef.current[row][col] === 0) {
-//                 gridRef.current[row][col] = 1
-//                 context.fillStyle = brushColor
-//                 context.fillRect(col * resolution, row * resolution, resolution, resolution)
-//             }
-//         }
-
-//         canvas.addEventListener('mousedown', handleMouseDown)
-//         canvas.addEventListener('mousemove', handleMouseMove)
-//         canvas.addEventListener('mouseup', handleMouseUp)
-//         canvas.addEventListener('mouseleave', handleMouseLeave)
-
-//         return () => {
-//             canvas.removeEventListener('mousedown', handleMouseDown)
-//             canvas.removeEventListener('mousemove', handleMouseMove)
-//             canvas.removeEventListener('mouseup', handleMouseUp)
-//             canvas.removeEventListener('mouseleave', handleMouseLeave)
-//         }
-//     }, [brushColor, resolution])
-
-//     return (
-//         <div>
-//             <h1>The Canvas</h1>
-//             <canvas ref={canvasRef} width={`${width}px`} height={`${height}px`} />
-//         </div>
-//     )
-// }
 
 import React, { useEffect, useRef } from 'react'
+import './canvas.css'
 
-export default function TheCanvas({ width, height, resolution, brushColor }) {
+function hexToRgba(hex, opacity) {
+    let r = 0, g = 0, b = 0;
+    if (hex.length === 4) {
+      r = parseInt(hex[1] + hex[1], 16);
+      g = parseInt(hex[2] + hex[2], 16);
+      b = parseInt(hex[3] + hex[3], 16);
+    } else if (hex.length === 7) {
+      r = parseInt(hex[1] + hex[2], 16);
+      g = parseInt(hex[3] + hex[4], 16);
+      b = parseInt(hex[5] + hex[6], 16);
+    }
+    return `rgba(${r},${g},${b},${opacity})`;
+  }
+export default function TheCanvas({ width, height, resolution, brushColor, brushOpacity }) {
     const canvasRef = useRef(null)
     const isDrawing = useRef(false)
     const animationFrameId = useRef(null)
+    const lastX = useRef(0);
+    const lastY = useRef(0);
+
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -112,18 +29,33 @@ export default function TheCanvas({ width, height, resolution, brushColor }) {
 
         // Initialize the canvas
         context.fillStyle = 'white'
-        context.fillRect(0, 0, canvas.width, canvas.height)
-    }, [width, height])
+        context.fillRect(0, 0, canvas.width, canvas.height)}, [width, height])
 
     useEffect(() => {
         const canvas = canvasRef.current
         const context = canvas.getContext('2d')
 
+
         const draw = (x, y) => {
+            console.log(brushOpacity)
+            const rgbaColor = hexToRgba(brushColor, brushOpacity);
+            console.log(rgbaColor)
+            context.strokeStyle = rgbaColor;
             const col = Math.floor(x / resolution) * resolution
             const row = Math.floor(y / resolution) * resolution
-            context.fillStyle = brushColor
-            context.fillRect(col, row, resolution, resolution)
+            // context.fillStyle = brushColor
+            // context.fillRect(col, row, resolution, resolution)
+            context.lineWidth =  resolution;
+            context.strokeStyle = brushColor;
+            context.lineCap = 'round';
+            
+      context.beginPath();
+      context.moveTo(lastX.current, lastY.current);
+      context.lineTo(x, y);
+      context.stroke();
+
+      lastX.current = x;
+      lastY.current = y;
         }
 
         const handleMouseDown = (event) => {
@@ -131,11 +63,13 @@ export default function TheCanvas({ width, height, resolution, brushColor }) {
             const rect = canvas.getBoundingClientRect()
             const x = event.clientX - rect.left
             const y = event.clientY - rect.top
+            lastX.current = x;
+            lastY.current = y;
             draw(x, y)
         }
 
         const handleMouseMove = (event) => {
-            if (!isDrawing.current) return
+            if (!isDrawing.current) return;
             const rect = canvas.getBoundingClientRect()
             const x = event.clientX - rect.left
             const y = event.clientY - rect.top
@@ -160,11 +94,23 @@ export default function TheCanvas({ width, height, resolution, brushColor }) {
             canvas.removeEventListener('mouseleave', handleMouseUp)
         }
     }, [brushColor, resolution])
+const handleSave = () => {
+  const canvas = canvasRef.current;
+  canvas.toBlob((blob) => {
+    // Create a link and trigger a download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'canvas.png';
+    link.click();
+    console.log(blob)
+  }, 'image/png');
+
+};
 
     return (
-        <div>
+        <div className="tocanvas">
             <canvas ref={canvasRef} width={width} height={height} />
-
+            <button onClick={handleSave}>Save Canvas</button>
         </div>
     )
 }

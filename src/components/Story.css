@@ -1,0 +1,25 @@
+
+.gray-square {
+  width: 100px;
+  height: 100px;
+  background-color: gray;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  cursor: grab;
+}
+
+  .board {
+    display: flex;
+    /* flex-wrap: wrap; */
+    width: 320px;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .gray-square:active {
+    cursor: grabbing;
+  }

@@ -1,0 +1,14 @@
+.tocanvas {
+
+display: flex;
+flex-direction: column;
+
+    border: 2px solid black;
+}
+
+canvas {
+    /* width: 70vw;
+    height: 70vh; */
+    border: 2px solid black;
+
+}
