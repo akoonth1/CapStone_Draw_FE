@@ -1,17 +1,93 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, } from 'react';
 import './canvas.css';
 
-export default function TheCanvas({ width, height, resolution, brushColor, brushOpacity }) {
+export default function TheCanvas({ width, height, resolution, brushColor, brushOpacity, tool }) {
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
   const lastX = useRef(0);
   const lastY = useRef(0);
+
+  const [pictureName, setPictureName] = useState('');
+
+    // History stack for undo functionality
+    const historyRef = useRef([]);
+    const maxHistory = 5; // Maximum number of undo steps
+    let redoRef = useRef(null);
+
+// Function to save canvas to local storage
+const saveCanvasToLocalStorage = () => {
+    const canvas = canvasRef.current;
+    const dataURL = canvas.toDataURL('image/png');
+    localStorage.setItem('savedCanvas', dataURL);
+  };
+
+  // Function to load canvas from local storage
+  const loadCanvasFromLocalStorage = () => {
+    const dataURL = localStorage.getItem('savedCanvas');
+    if (dataURL) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      const image = new Image();
+      image.onload = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0);
+      };
+      image.src = dataURL;
+    }
+  };
+
+  // Function to save current canvas state to history
+  const saveToHistory = () => {
+    const canvas = canvasRef.current;
+    historyRef.current.push(canvas.toDataURL());
+    // Limit history to prevent excessive memory usage
+    if (historyRef.current.length > maxHistory) {
+      historyRef.current.shift();
+    }
+  };
+
+  // Function to handle Undo action
+  const handleUndo = () => {
+    if (historyRef.current.length === 0) {
+      alert('No more actions to undo.');
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+
+    // Remove the last state
+    redoRef =historyRef.current.pop();
+
+    // Get the previous state
+    const previousState = historyRef.current[historyRef.current.length - 1];
+
+    if (previousState) {
+      const img = new Image();
+      img.src = previousState;
+      img.onload = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0);
+        saveCanvasToLocalStorage();
+      };
+    } else {
+      // If no previous state exists, clear the canvas
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      saveCanvasToLocalStorage();
+    }
+  };
+
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     context.fillStyle = 'white';
     context.fillRect(0, 0, canvas.width, canvas.height);
+      // Load saved canvas if available
+      loadCanvasFromLocalStorage();
   }, [width, height]);
 
   useEffect(() => {
@@ -19,19 +95,30 @@ export default function TheCanvas({ width, height, resolution, brushColor, brush
     const context = canvas.getContext('2d');
 
     const draw = (x, y) => {
-      const rgbaColor = hexToRgba(brushColor, brushOpacity);
-      context.strokeStyle = rgbaColor;
-      context.lineWidth = resolution;
-      context.lineCap = 'round';
+        const context = canvasRef.current.getContext('2d');
+        context.lineWidth = resolution;
+        context.lineCap = 'round';
+      
+        //Eraser removes  pixels
 
-      context.beginPath();
-      context.moveTo(lastX.current, lastY.current);
-      context.lineTo(x, y);
-      context.stroke();
+        if (tool === 'eraser') {
+          context.globalCompositeOperation = 'destination-out';
+          context.strokeStyle = `rgba(0,0,0,${brushOpacity})`;
+        } else {
+          context.globalCompositeOperation = 'source-over';
+          const rgbaColor = hexToRgba(brushColor, brushOpacity);
+          context.strokeStyle = rgbaColor;
+        }
+      
+        context.beginPath();
+        context.moveTo(lastX.current, lastY.current);
+        context.lineTo(x, y);
+        context.stroke();
+      
+        lastX.current = x;
+        lastY.current = y;
 
-      lastX.current = x;
-      lastY.current = y;
-    };
+      };
 
     const handleMouseDown = (event) => {
       isDrawing.current = true;
@@ -52,8 +139,13 @@ export default function TheCanvas({ width, height, resolution, brushColor, brush
     };
 
     const handleMouseUp = () => {
-      isDrawing.current = false;
-    };
+        if (isDrawing.current) {
+          isDrawing.current = false;
+          saveToHistory();
+          saveCanvasToLocalStorage();
+        }
+      };
+
 
     canvas.addEventListener('mousedown', handleMouseDown);
     canvas.addEventListener('mousemove', handleMouseMove);
@@ -66,19 +158,8 @@ export default function TheCanvas({ width, height, resolution, brushColor, brush
       canvas.removeEventListener('mouseup', handleMouseUp);
       canvas.removeEventListener('mouseleave', handleMouseUp);
     };
-  }, [brushColor, brushOpacity, resolution]);
+  }, [brushColor, brushOpacity, resolution, tool]);
 
-//   const handleSave = () => {
-//     const canvas = canvasRef.current;
-//     canvas.toBlob((blob) => {
-//       const link = document.createElement('a');
-//       link.href = URL.createObjectURL(blob);
-//       link.download = 'canvas.png';
-//       link.click();
-//       console.log(blob);
-//       console.log(link);
-//     }, 'image/png');
-//   };
 
 const handleSave = () => {
     const canvas = canvasRef.current;
@@ -89,10 +170,16 @@ const handleSave = () => {
         alert('Failed to convert canvas to image.');
         return;
       }
-  
+
+      if (!pictureName.trim()) {
+        alert('Please enter a name for your picture.');
+        return;
+      }
+    
+
       // Create FormData and append the blob
       const formData = new FormData();
-      formData.append('file', blob, 'canvas.png'); // 'file' is the key your backend expects
+      formData.append('file', blob, `${pictureName}.png`); // 'file' is the key your backend expects
   
       try {
         const response = await fetch('http://localhost:3000/api/blob/', {
@@ -114,11 +201,67 @@ const handleSave = () => {
     }, 'image/png');
   };
 
+
+  const handleReset = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+
+    // Clear the canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Optionally, fill the canvas with a white background
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Remove saved canvas from local storage
+    localStorage.removeItem('savedCanvas');
+
+    // Clear history
+    historyRef.current = [];
+    
+    // Save the cleared state
+    saveToHistory();
+  };
+
+console.log( historyRef.current)
+
+    const handleRedo = () => {
+        if (redoRef) {
+          const canvas = canvasRef.current;
+          const context = canvas.getContext('2d');
+      
+          const img = new Image();
+          img.src = redoRef;
+          img.onload = () => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(img, 0, 0);
+            saveCanvasToLocalStorage();
+          };
+      
+          redoRef = null;
+        } else {
+          alert('No more actions to redo.');
+        }
+      }
+  
   return (
     <div className="tocanvas">
       <canvas ref={canvasRef} width={width} height={height} />
+
+      <input
+        type="text"
+        placeholder="Name of picture"
+        value={pictureName}
+        onChange={(e) => setPictureName(e.target.value)}
+        required
+      />
+ 
       <button onClick={handleSave}>Save Canvas</button>
-    </div>
+      <button onClick={handleReset}>Reset Canvas</button>
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
+      </div>
+   
   );
 }
 

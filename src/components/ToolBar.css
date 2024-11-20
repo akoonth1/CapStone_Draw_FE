@@ -1,9 +1,82 @@
+/* ToolBar_Draw.css */
+
+/* Container for the toolbar */
 .toolbar {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px; /* Adjust as needed */
+  background-color: #f9f9f9;
+}
+
+/* Labels styling */
+.toolbar label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Range and color input styling */
+.toolbar input[type="range"],
+.toolbar input[type="color"] {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Container for color options */
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Individual color circle */
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent; /* Default border */
+  transition: border 0.3s, transform 0.3s;
+}
+
+/* Highlighting the selected color circle */
+.circle.selected {
+  border: 2px solid #000; /* Solid border to indicate selection */
+  transform: scale(1.1); /* Slightly enlarge the selected circle */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+}
+
+/* Optional: Hover effect for color circles */
+.circle:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+
+/* Tool Selection Buttons */
+.tool-options {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .tool-button {
+    flex: 1;
     padding: 10px;
-    background-color: #f4f4f4;
-    border-bottom: 1px solid #ccc;
-    flex-direction: column;
-
-}
+    margin: 0 5px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .tool-button.active {
+    background-color: #b0b0b0;
+  }
+  
+  .tool-button:hover {
+    background-color: #c0c0c0;
+  }

@@ -9,6 +9,7 @@ flex-direction: column;
 canvas {
     /* width: 70vw;
     height: 70vh; */
-    border: 2px solid black;
+    border: 5px solid rgb(66, 58, 58);
+    background-color: tomato;
 
 }

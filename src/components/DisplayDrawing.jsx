@@ -42,7 +42,7 @@ export default function DisplayDrawing() {
 
   return (
     <div>
-      <h1>Display Drawing</h1>
+
       {drawings.length > 0 ? (
         drawings.map((blob) => (
           <div key={blob._id} style={{ marginBottom: '20px' }}>
@@ -51,7 +51,7 @@ export default function DisplayDrawing() {
               alt={`Drawing ${blob._id}`}
               style={{ maxWidth: '500px', height: 'auto', border: '1px solid #ccc', padding: '10px' }}
             />
-            <p>Uploaded on: {new Date(blob.createdAt).toLocaleString()}</p>
+           
           </div>
         ))
       ) : (

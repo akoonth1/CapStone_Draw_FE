@@ -13,6 +13,7 @@ export default function Navbar() {
             <li><Link to="/draw">Draw</Link></li>
             <li><Link to="/storyboard">Storyboard</Link></li>
             <li><Link to="/search">Search</Link></li>
+            <li><Link to="/findDrawing">Find Drawing</Link></li>              
           </ul>
         </nav>
     );
