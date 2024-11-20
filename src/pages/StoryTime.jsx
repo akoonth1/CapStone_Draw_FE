@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import img1 from '../assets/1ex.png';
-import img2 from '../assets/2ex.png';
-import img3 from '../assets/3ex.png';
+
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 //https://react-bootstrap.netlify.app/docs/components/carousel/
 
