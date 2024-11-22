@@ -1,0 +1,31 @@
+/* SortableItem.css */
+
+.sortable-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sortable-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sortable-item-image {
+  width: 250px;
+  height: auto; /* Maintains aspect ratio */
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.sortable-item-name {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+}

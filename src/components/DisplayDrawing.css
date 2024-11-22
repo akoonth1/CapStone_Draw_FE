@@ -1,66 +1,68 @@
-/* DisplayDrawing.css */
+/* BookDrager.css */
 
-.grid-container {
-  display: flex;
-  gap: 20px;
+.container {
   padding: 20px;
 }
 
-.grid-item {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  cursor: grab;
-  transition: box-shadow 0.2s ease;
-}
-
-.grid-item:active {
-  cursor: grabbing;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.image-container {
+.sideby {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 20px;
 }
 
-.grid-image {
+.droppable {
+  width: 200px;
+  min-height: 300px;
+  padding: 10px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  position: relative; /* Ensure the placeholder is positioned correctly */
+  transition: background-color 0.3s ease;
+}
+
+.droppable.is-over {
+  background-color: #105910; /* Highlight color when active */
+}
+
+.droppable h2 {
+  text-align: center;
+}
+
+.column-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  font-size: 16px;
+  text-align: center;
+  pointer-events: none; /* Ensure the placeholder does not interfere with drag-and-drop */
+}
+
+.sortable-item {
+  background-color: rgb(133, 38, 38);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   width: 100%;
-  height: auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.sortable-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sortable-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 4px;
 }
 
-.caption {
+.sortable-item-name {
   margin-top: 8px;
   font-size: 14px;
   color: #333;
-  word-wrap: break-word;
 }
-
-.picture-name {
-  display: block;
-  font-weight: bold;
-}
-
-.picture-id {
-  display: block;
-  font-size: 12px;
-  color: #666;
-}
-
-.empty-column {
-    background-color: #f0f0f0;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    min-width: 200px;
-    min-height: 150px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
