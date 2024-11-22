@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import FullList from './FullList';
+import { useNavigate } from 'react-router-dom';
 
 export default function FindDrawing() {
   const [selectedId, setSelectedId] = useState('');
   const [imageData, setImageData] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (selectedId) {
       const fetchImage = async () => {
@@ -51,11 +52,42 @@ export default function FindDrawing() {
     }
 
   
+    const handleEdit = async () => {
+        const confirmed = window.confirm('Are you sure you want to edit this canvas?');
+        if (!confirmed) return;
+    
+        try {
+          const response = await fetch(`http://localhost:3000/api/blob/${selectedId}`, {
+            method: 'GET',
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+    
+          const blob = await response.blob();
+    
+          // Convert Blob to Data URL
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const dataURL = reader.result;
+            // Save the Data URL into local storage
+            localStorage.setItem('savedCanvas', dataURL);
+            // Navigate to TheCanvas component with the id
+            navigate(`/draw/${selectedId}`); // Updated route with id
+          };
+          reader.readAsDataURL(blob);
+        } catch (error) {
+          console.error('Error fetching image for editing:', error);
+          alert('Failed to load the canvas for editing. Please try again.');
+        }
+      };
 
   return (
     <div>
       <h1>Find Drawing</h1>
       <FullList onSelect={setSelectedId} />
+      <button onClick={handleDelete}>Delete Canvas</button>
+      <button onClick={handleEdit}>Edit Canvas</button>
       {imageData && (
         <div>
           <h2>Displaying Image for ID: {selectedId}</h2>
@@ -63,7 +95,7 @@ export default function FindDrawing() {
        
         </div>
       )}
-         <button onClick={handleDelete}>Delete Canvas</button>
+   
     </div>
   );
 }

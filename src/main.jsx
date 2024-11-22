@@ -5,14 +5,16 @@ import App from './App.jsx'
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import { BookProvider } from './components/BookContext';
 
 
 createRoot(document.getElementById('root')).render(
  
   <StrictMode>
     <Router>
-      <App />
+      <BookProvider>
+        <App />
+      </BookProvider>
     </Router>
   </StrictMode>,
 )

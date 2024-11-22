@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import BookContext from '../components/BookContext';
 
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 //https://react-bootstrap.netlify.app/docs/components/carousel/
@@ -8,79 +9,124 @@ function ControlledCarousel() {
   const [index, setIndex] = useState(0);
   const [drawings, setDrawings] = useState([]);
   const [images, setImages] = useState([]);
+  const { orderedIds } = useContext(BookContext);
+    const [books, setBooks] = useState([]);
+    const [selectedBookId, setSelectedBookId] = useState('');
+
+
+//   console.log(orderedIds);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
-   // Fetch the list of drawing IDs
-   useEffect(() => {
-    async function fetchDrawingIDs() {
+//    // Fetch the list of drawing IDs
+//    useEffect(() => {
+//     async function fetchDrawingIDs() {
+//       try {
+//         const response = await fetch('http://localhost:3000/api/blobslist');
+//         if (!response.ok) {
+//           throw new Error(`Error fetching drawing IDs: ${response.status}`);
+//         }
+//         const data = await response.json();
+//         setDrawings(data);
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     }
+//     fetchDrawingIDs();
+//   }, []);
+//   console.log(drawings);
+
+
+  // Fetch Book titles for selector
+  useEffect(() => {
+    // Fetch book titles from the API
+    async function fetchBookTitles() {
       try {
-        const response = await fetch('http://localhost:3000/api/blobslist');
+        const response = await fetch('http://localhost:3000/books/booklist');
         if (!response.ok) {
-          throw new Error(`Error fetching drawing IDs: ${response.status}`);
+          throw new Error(`Error fetching book titles: ${response.status}`);
         }
         const data = await response.json();
-        setDrawings(data);
+        setBooks(data);
       } catch (error) {
         console.error(error);
       }
     }
-    fetchDrawingIDs();
+    fetchBookTitles();
+
   }, []);
 
+// Fetch Pages for selected book
+useEffect(() => {
+    async function fetchPages() {
+        try {
+        const response = await fetch(`http://localhost:3000/books/booklist/${selectedBookId}`);
+        if (!response.ok) {
+            throw new Error(`Error fetching pages for book ID ${selectedBookId}: ${response.status}`);
+        }
+        const data = await response.json();
+        setDrawings(data);
+        } catch (error) {
+        console.error(error);
+        }
+    }
+    if (selectedBookId) {
+        fetchPages();
+    }
+}, [selectedBookId]);
+
+
+
+
+
   // Fetch images for each drawing ID
+
   useEffect(() => {
     async function fetchImages() {
       try {
         const imagePromises = drawings.map(async (id) => {
-          const response = await fetch(`http://localhost:3000/api/blob/${id}`);
-          if (!response.ok) {
-            throw new Error(`Error fetching image for ID ${id}: ${response.status}`);
+          try {
+            const response = await fetch(`http://localhost:3000/api/blob/${id}`);
+            if (!response.ok) {
+              throw new Error(`Error fetching image for ID ${id}: ${response.status}`);
+            }
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+            return { id, imageUrl };
+          } catch (error) {
+            console.error(error);
+            return null; // Return null if there was an error fetching this image
           }
-          const blob = await response.blob();
-          const imageUrl = URL.createObjectURL(blob);
-          return { id, imageUrl };
         });
+
         const imagesData = await Promise.all(imagePromises);
-        setImages(imagesData);
+        // Filter out any null entries (failed fetches)
+        const successfullyFetchedImages = imagesData.filter((image) => image !== null);
+        setImages(successfullyFetchedImages);
       } catch (error) {
         console.error(error);
       }
     }
+
     if (drawings.length > 0) {
       fetchImages();
     }
   }, [drawings]);
 
-//   return (
-//     <Carousel activeIndex={index} onSelect={handleSelect}>
-//       <Carousel.Item style={{ color: 'darkgray' }}>
-//         <img src={img1} alt="First slide" />
-//         <Carousel.Caption>
-//           <h3>First slide label</h3>
-//           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//       <Carousel.Item>
-//         <img src={img2} alt="Second slide" />
-//         <Carousel.Caption style={{ color: 'darkgray' }}>
-//           <h3>Second slide label</h3>
-//           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//       <Carousel.Item>
-//         <img src={img3} alt="Third slide" />
-//         <Carousel.Caption style={{ color: 'darkgray' }}>
-//           <h3>Third slide label</h3>
-//           <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//     </Carousel>
-//   );
-// }
+  
+  const handleSelectBook = (event) => {
+    setSelectedBookId(event.target.value);
+    console.log(selectedBookId);
+    console.log(drawings);
+  };
+
+
+
 return images.length > 0 ? (
+    <>
+
     <Carousel activeIndex={index} onSelect={handleSelect}>
       {images.map(({ id, imageUrl }) => (
         <Carousel.Item key={id}>
@@ -88,7 +134,7 @@ return images.length > 0 ? (
             className="d-block w-100"
             src={imageUrl}
             alt={`Drawing ${id}`}
-            style={{ maxHeight: '500px', objectFit: 'contain' }}
+            style={{ maxHeight: '80vh', objectFit: 'contain' }}
           />
           <Carousel.Caption>
             <h3>Drawing ID: {id}</h3>
@@ -96,8 +142,24 @@ return images.length > 0 ? (
         </Carousel.Item>
       ))}
     </Carousel>
+    </>
   ) : (
+    <>
+    <div>
+    <label>Select a Book: </label>
+    <select value={selectedBookId} onChange={handleSelectBook}>
+      <option value="" disabled>
+        -- Choose a Book --
+      </option>
+      {books.map((book) => (
+        <option key={book._id} value={book._id}>
+          {book.title}
+        </option>
+      ))}
+    </select>
+  </div>
     <p>Loading images...</p>
+    </>
   );
 }
 export default ControlledCarousel;

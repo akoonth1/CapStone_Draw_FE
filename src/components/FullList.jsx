@@ -1,3 +1,4 @@
+// FullList.jsx
 import React, { useState, useEffect } from 'react';
 
 export default function FullList({ onSelect }) {
@@ -10,9 +11,21 @@ export default function FullList({ onSelect }) {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        console.log(data);
-        setDrawings(data);
+        const ids = await response.json();
+
+        // Fetch picture name for each id
+        const drawingsWithNames = await Promise.all(
+          ids.map(async (id) => {
+            const nameResponse = await fetch(`http://localhost:3000/api/blob/${id}/pictureName`);
+            if (!nameResponse.ok) {
+              throw new Error(`Error fetching picture name for id ${id}`);
+            }
+            const { pictureName } = await nameResponse.json();
+            return { id, pictureName };
+          })
+        );
+
+        setDrawings(drawingsWithNames);
       } catch (err) {
         console.error('Error fetching drawings:', err);
       }
@@ -23,14 +36,14 @@ export default function FullList({ onSelect }) {
 
   return (
     <div>
-      <h2>Select a Drawing ID</h2>
+      <h2>Select a Drawing</h2>
       <select onChange={(e) => onSelect(e.target.value)}>
         <option value="" disabled selected>
-          Select an ID
+          Select a drawing
         </option>
-        {drawings.map((id) => (
+        {drawings.map(({ id, pictureName }) => (
           <option key={id} value={id}>
-            {id}
+            {pictureName}
           </option>
         ))}
       </select>

@@ -1,10 +1,21 @@
-
+/* Navigation Bar */
 nav {
+  position: fixed; /* Fixes the navbar to a specific position */
+  top: 0;          /* Positions the navbar at the top */
+  left: 0;         /* Aligns the navbar to the left */
+  width: 100%;     /* Makes the navbar span the full width of the viewport */
   background-color: #727272; 
   padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  z-index: 1000;   /* Ensures the navbar stays above other elements */
 }
 
+/* Adjust the form container or main content to account for the fixed navbar */
+body {
+  padding-top: 60px; /* Adjust this value based on the navbar's height */
+}
 
+/* Navigation List */
 nav ul {
   list-style: none;
   display: flex;
@@ -23,7 +34,7 @@ nav ul li {
 nav ul li a {
   color: white; /* Text color */
   text-decoration: none;
-  font-size: 16px;
+  font-size: 24px;
   transition: color 0.3s ease;
 }
 

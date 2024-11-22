@@ -9,12 +9,15 @@ export default function Navbar() {
   
         <nav>
           <ul>
-            <li><Link to="/">Home (Carousel)</Link></li>
+            <li><Link to="/landing">Landing Page</Link></li>
+            <li><Link to="/">Story Time</Link></li>
             <li><Link to="/draw">Draw</Link></li>
-            <li><Link to="/storyboard">Storyboard</Link></li>
+            {/* <li><Link to="/storyboard">Storyboard</Link></li> */}
             <li><Link to="/search">Search</Link></li>
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
+            <li><Link to="/book">Book</Link></li>
           </ul>
         </nav>
     );
     }
+    

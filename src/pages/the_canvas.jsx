@@ -1,17 +1,28 @@
-import React, { useEffect, useRef, useState, } from 'react';
+import React, { useEffect, useRef, useState, useContext} from 'react';
 import './canvas.css';
+import BookContext from '../components/BookContext'; // Import BookContext
 
-export default function TheCanvas({ width, height, resolution, brushColor, brushOpacity, tool }) {
+export default function TheCanvas({ 
+    id,
+    width, 
+    height, 
+    resolution, 
+    brushColor, 
+    brushOpacity, 
+    tool }) {
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
   const lastX = useRef(0);
   const lastY = useRef(0);
+  const { setOrderedIds } = useContext(BookContext); // Access setOrderedIds from context
 
   const [pictureName, setPictureName] = useState('');
 
+  console.log('id:', id);
+
     // History stack for undo functionality
     const historyRef = useRef([]);
-    const maxHistory = 5; // Maximum number of undo steps
+    const maxHistory = 6; // Maximum number of undo steps
     let redoRef = useRef(null);
 
 // Function to save canvas to local storage
@@ -47,6 +58,7 @@ const saveCanvasToLocalStorage = () => {
   };
 
   // Function to handle Undo action
+  // Fix undo to not have last step as reset
   const handleUndo = () => {
     if (historyRef.current.length === 0) {
       alert('No more actions to undo.');
@@ -92,7 +104,7 @@ const saveCanvasToLocalStorage = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+  // const context = canvas.getContext('2d');
 
     const draw = (x, y) => {
         const context = canvasRef.current.getContext('2d');
@@ -160,47 +172,91 @@ const saveCanvasToLocalStorage = () => {
     };
   }, [brushColor, brushOpacity, resolution, tool]);
 
+  useEffect(() => {
+    if (id) {
+      // Fetch the pictureName if id exists
+      async function fetchPictureName() {
+        try {
+          const response = await fetch(`http://localhost:3000/api/blob/${id}/pictureName`);
+          if (!response.ok) {
+            throw new Error(`Error fetching picture name: ${response.statusText}`);
+          }
+          const data = await response.json();
+          setPictureName(data.pictureName);
+        } catch (error) {
+          console.error('Failed to fetch picture name:', error);
+          alert('Failed to fetch picture name.');
+        }
+      }
+
+      fetchPictureName();
+    }
+  }, [id]);
 
 const handleSave = () => {
-    const canvas = canvasRef.current;
-  
-    canvas.toBlob(async (blob) => {
-      if (!blob) {
-        console.error('Canvas is empty or failed to convert to blob.');
-        alert('Failed to convert canvas to image.');
-        return;
-      }
+  const canvas = canvasRef.current;
 
-      if (!pictureName.trim()) {
-        alert('Please enter a name for your picture.');
-        return;
-      }
-    
+  canvas.toBlob(async (blob) => {
+    if (!blob) {
+      console.error('Canvas is empty or failed to convert to blob.');
+      alert('Failed to convert canvas to image.');
+      return;
+    }
 
-      // Create FormData and append the blob
-      const formData = new FormData();
-      formData.append('file', blob, `${pictureName}.png`); // 'file' is the key your backend expects
+    if (!pictureName.trim()) {
+      alert('Please enter a name for your picture.');
+      return;
+    }
+
+    // Create FormData and append the required fields
+
+    try {
+      let response;
+
+      if (id) {
+        // **Editing Mode: Update existing image**
+        const formData = new FormData();
+
+        formData.append('data', blob, `${pictureName.trim()}.png`); 
+        formData.append('contentType', blob.type);                   
+        formData.append('pictureName', pictureName.trim());         
+
+        response = await fetch(`http://localhost:3000/api/blob/${id}`, {
+          method: 'PUT',
+          body: formData,
+
+        });
+      } else {
+
+
+        // **Creating Mode: Save new image**
+
+        const formData = new FormData();
+        formData.append('file', blob, `${pictureName}.png`); // 'file' is the key your backend expects
   
-      try {
-        const response = await fetch('http://localhost:3000/api/blob/', {
+        response = await fetch('http://localhost:3000/api/blob/', {
           method: 'POST',
           body: formData,
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.statusText}`);
-        }
-  
-        const result = await response.json();
-        console.log('Success:', result);
-        alert('Canvas has been successfully saved to the database!');
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to save the canvas. Please try again.');
-      }
-    }, 'image/png');
-  };
 
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      alert(`Canvas has been successfully ${id ? 'updated' : 'saved'}.`);
+
+      // Optionally, clear the local storage after saving
+      localStorage.removeItem('savedCanvas');
+    } catch (error) {
+      console.error('Error saving the canvas:', error);
+      alert(`Failed to ${id ? 'update' : 'save'} the canvas. Please try again.`);
+    }
+  }, 'image/png');
+};
 
   const handleReset = () => {
     const canvas = canvasRef.current;
@@ -223,7 +279,7 @@ const handleSave = () => {
     saveToHistory();
   };
 
-console.log( historyRef.current)
+
 
     const handleRedo = () => {
         if (redoRef) {
@@ -243,23 +299,105 @@ console.log( historyRef.current)
           alert('No more actions to redo.');
         }
       }
-  
+
+     
+
+    //   const handleRemoveId = () => {
+    //     if (!id) {
+    //         console.warn('onRemoveId prop is not provided or not a function.');
+
+    //     } else { id = null;
+    //     }
+    //   };
+    
+    // const handleSaveAsNew = async () => {
+    //     const canvas = canvasRef.current;
+    //     canvas.toBlob(async (blob) => {
+    //       if (blob) {
+    //         try {
+    //           const formData = new FormData();
+    //           formData.append('image', blob, `${pictureName || 'canvas'}_${Date.now()}.png`);
+    
+    //           const response = await fetch('http://localhost:3000/api/blob', {
+    //             method: 'POST',
+    //             body: formData,
+    //           });
+    
+    //           if (!response.ok) {
+    //             const errorText = await response.text();
+    //             console.error(`Error saving image: ${response.status} - ${errorText}`);
+    //             alert('Failed to save the image.');
+    //             return;
+    //           }
+    
+    //           const data = await response.json();
+    //           const newImageId = data._id; // Adjust based on your API response
+    
+    //           // Update the orderedIds in BookContext
+    //           setOrderedIds((prevIds) => [...prevIds, newImageId]);
+    
+    //           alert('Canvas has been saved as a new image!');
+    //         } catch (error) {
+    //           console.error('Error saving canvas:', error);
+    //           alert('An unexpected error occurred while saving the image.');
+    //         }
+    //       } else {
+    //         alert('Failed to generate image from canvas.');
+    //       }
+    //     }, 'image/png');
+    //   };
+    const handleSaveAsNew = async () => {
+        const canvas = canvasRef.current;
+        canvas.toBlob(async (blob) => {
+          if (blob) {
+            try {
+              const formData = new FormData();
+              formData.append('file', blob, `${pictureName}clone.png`);
+              
+              const response = await fetch('http://localhost:3000/api/blob', {
+                method: 'POST',
+                body: formData,
+              });
+    
+              const result = await response.json();
+              if (response.ok) {
+                alert('Image saved successfully!');
+              } else {
+                alert(`Error: ${result.error}`);
+              }
+            } catch (error) {
+              console.error('Error uploading image:', error);
+              alert('Failed to upload image.');
+            }
+          }
+        });
+      };
+    
   return (
     <div className="tocanvas">
-      <canvas ref={canvasRef} width={width} height={height} />
-
+               <div className="toolbar">
       <input
         type="text"
         placeholder="Name of picture"
         value={pictureName}
         onChange={(e) => setPictureName(e.target.value)}
         required
+        disabled={!!id} // Disable input if editing
       />
  
       <button onClick={handleSave}>Save Canvas</button>
+      {id && (
+        <>
+          <button onClick={handleSaveAsNew}>Save as New</button>
+        </>
+      )}
+     {/* {id && <button onClick={handleRemoveId}>Stop Editing</button>} */}
       <button onClick={handleReset}>Reset Canvas</button>
       <button onClick={handleUndo}>Undo</button>
       <button onClick={handleRedo}>Redo</button>
+      </div>
+      <canvas ref={canvasRef} width={width} height={height} />
+ 
       </div>
    
   );
