@@ -1,31 +1,41 @@
-/* BookDrager.css */
+/* DisplayDrawing.css */
 
-.container {
+.display-drawing-container {
+  display: flex;
+  justify-content: center; /* Centers the columns horizontally */
+  align-items: flex-start; /* Aligns columns to the top */
+  width: 100%;
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto; /* Centers the container within its parent */
   padding: 20px;
+  box-sizing: border-box;
 }
 
-.sideby {
+.columns {
   display: flex;
-  gap: 20px;
+  gap: 20px; /* Space between columns */
+  width: 100%;
 }
 
 .droppable {
-  width: 200px;
-  min-height: 300px;
-  padding: 10px;
-  border: 2px dashed #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  position: relative; /* Ensure the placeholder is positioned correctly */
-  transition: background-color 0.3s ease;
+  flex: 1; /* Allows columns to grow equally */
+  min-width: 300px; /* Ensures a minimum width */
+  min-height: 400px; /* Existing style */
+  padding: 20px; /* Existing style */
+  border: 2px dashed #ccc; /* Existing style */
+  border-radius: 8px; /* Existing style */
+  background-color: #f9f9f9; /* Existing style */
+  position: relative; /* Existing style */
+  transition: background-color 0.3s ease; /* Existing style */
 }
 
 .droppable.is-over {
-  background-color: #105910; /* Highlight color when active */
+  background-color: #70a170; /* Highlight color when active */
 }
 
 .droppable h2 {
   text-align: center;
+  font-size: 1.5rem; /* Increased heading size */
 }
 
 .column-placeholder {
@@ -36,33 +46,25 @@
   color: #888;
   font-size: 16px;
   text-align: center;
-  pointer-events: none; /* Ensure the placeholder does not interfere with drag-and-drop */
+  pointer-events: none; /* Existing style */
 }
 
 .sortable-item {
-  background-color: rgb(133, 38, 38);
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  width: 100%; /* Makes items take full width of the column */
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: grab;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sortable-item:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.sortable-item img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.sortable-item-name {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #333;
+.sortable-item:active {
+  cursor: grabbing;
 }

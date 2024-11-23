@@ -59,9 +59,9 @@ export default function LandingPage() {
               </span>
             </p>
           </div>
-          
+          <BookCoverCarousel className='Reposition'/>
         </div>
-        <BookCoverCarousel />
+    
       </div>
 
       {/* Optional: Additional content below the header */}

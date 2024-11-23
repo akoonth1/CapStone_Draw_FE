@@ -7,7 +7,9 @@
 //   PointerSensor,
 //   useSensor,
 //   useSensors,
-// KeyboardSensor,
+//     useDroppable,
+//     rectIntersection,
+//     closestCorners,
     
 // } from '@dnd-kit/core';
 // import {
@@ -15,6 +17,7 @@
 //   SortableContext,
 //     rectSortingStrategy,
 //   verticalListSortingStrategy,
+//     useSortable,
 // } from '@dnd-kit/sortable';
 // import { CSS } from '@dnd-kit/utilities';
 // import DraggableItem from './draggableItem';
@@ -24,6 +27,17 @@
 
 // import './DisplayDrawing.css'; // Ensure CSS is updated
 // import BookContext from './BookContext'; // Import the BookContext
+// import Task from './Task';
+// import Column from './Column';
+// import BookDrager from './BookDrager';
+
+// // const initialColumnsData = {
+// //     column1: [
+// //       { id: 'task-1', content: 'Task 1' },
+// //       { id: 'task-2', content: 'Task 2' },
+// //       { id: 'task-3', content: 'Task 3' },
+// //     ]}
+
 
 // export default function DisplayDrawing( { id, pictureName, imageUrl }) {
 
@@ -31,6 +45,7 @@
 //   const [emptyColumn, setEmptyColumn] = useState([]); // State for the empty column
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
+//   const [pages, setPages] = useState([]);
 
 //   // Consume the BookContext
 //   const { orderedIds, setOrderedIds } = useContext(BookContext);
@@ -48,29 +63,72 @@
 //   const { setNodeRef: setEmptyColumnRef, isOver } = useDroppable({
 //     id: 'empty-column',
 //   });
+// // DisplayDrawing.jsx
 
-//   useEffect(() => {
-//     // Fetch drawings from the API
-//     async function fetchDrawings() {
-//       try {
-//         const response = await fetch('http://localhost:3000/api/blobs');
+// useEffect(() => {
+//   // Fetch drawings from the API
+//   async function fetchDrawings() {
+//     try {
+//       const response = await fetch('http://localhost:3000/api/blobs');
 
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-
-//         const data = await response.json();
-//         setDrawings(data);
-//       } catch (err) {
-//         console.error('Error fetching drawings:', err);
-//         setError(err.message);
-//       } finally {
-//         setLoading(false);
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
 //       }
-//     }
 
-//     fetchDrawings();
-//   }, []);
+//       const data = await response.json();
+
+//       // Log the raw data to inspect its structure
+//       console.log('Fetched Data:', data);
+
+//       // Add 'content' key and map '_id' to 'id' for consistency
+//       const updatedDrawings = data.map(drawing => ({
+//         ...drawing,
+//         id: drawing._id, // **Uncommented:** Map '_id' to 'id'
+//         content: `http://localhost:3000/api/blob/${drawing._id}`, // Use '_id' here
+//       }));
+
+//       setDrawings(updatedDrawings);
+//       setLoading(false);
+//       console.log('Updated Drawings:', updatedDrawings);
+      
+//     } catch (error) {
+//       setError(error.message);
+//       setLoading(false);
+//     }
+//   }
+
+//   fetchDrawings();
+// }, []);
+
+//  // Prepare initial column data once drawings are fetched
+//  const initialColumnsData = {
+//     column1: drawings, // All drawings are initially in 'column1'
+//   };
+
+// // Fetch Pages for selected book
+// // useEffect(() => {
+// //     async function fetchPages() {
+// //         try {
+// //         const response = await fetch(`http://localhost:3000/books/booklist/${selectedBookId}`);
+// //         if (!response.ok) {
+// //             throw new Error(`Error fetching pages for book ID ${selectedBookId}: ${response.status}`);
+// //         }
+// //         const data = await response.json();
+// //         setPages(data);
+// //         } catch (error) {
+// //         console.error(error);
+// //         }
+// //     }
+// //     if (selectedBookId) {
+// //         fetchPages();
+// //     }
+// // }, [selectedBookId]);
+
+
+
+
+
+
 
 //   const handleDragEnd = (event) => {
 //     const { active, over } = event;
@@ -183,60 +241,31 @@
 //           ))}
 //         </ul>
 //       </div>
+//       <BookDrager initialColumns={initialColumnsData} />
 //     </div>
 //   );
 // }
+
+
 // DisplayDrawing.jsx
-// DisplayDrawing.jsx
 
-// DisplayDrawing.jsx
+import React, { useState, useEffect, useContext } from 'react';
+import BookDrager from './BookDrager'; // Ensure the correct import path
+import  BookContext from './BookContext'; // Adjust the import path as needed
 
-
-import React, { useContext, useEffect, useState } from 'react';
-import { 
-  DndContext, 
-  useSensor, 
-  useSensors, 
-  PointerSensor, 
-  KeyboardSensor, 
-  closestCenter 
-} from '@dnd-kit/core';
-import { 
-  SortableContext, 
-  arrayMove, 
-  verticalListSortingStrategy 
-} from '@dnd-kit/sortable';
-import SortableItem from './SortableItem'; // Ensure this component is correctly implemented
-import Droppable from './Droppable'; // Your Droppable component
-import BookContext from './BookContext'; // Ensure this context is correctly set up
-import './DisplayDrawing.css'; // Import your styles
-
-export default function DisplayDrawing() {
-  // State for columns
-  const [columns, setColumns] = useState({
-    column1: [], // Existing column
-    'image-drop-area': [], // New droppable area for images
-    // Add more columns if needed
-  });
-
-  // State for drawings fetched from API
+export default function DisplayDrawing({ id, pictureName, imageUrl }) {
   const [drawings, setDrawings] = useState([]);
-
-  // Loading and error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [columns, setColumns] = useState({ column1: [], column2: [] }); // Initialize columns
+
+  const [pages, setPages] = useState([]);
 
   // Consume the BookContext
   const { orderedIds, setOrderedIds } = useContext(BookContext);
 
-  // Initialize sensors for DnD Kit
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor)
-  );
-
-  // Fetch drawings from the API on component mount
   useEffect(() => {
+    // Fetch drawings from the API
     async function fetchDrawings() {
       try {
         const response = await fetch('http://localhost:3000/api/blobs');
@@ -246,142 +275,79 @@ export default function DisplayDrawing() {
         }
 
         const data = await response.json();
-        setDrawings(data);
-      } catch (err) {
-        console.error('Error fetching drawings:', err);
-        setError(err.message);
-      } finally {
+
+        // Log the raw data to inspect its structure
+        console.log('Fetched Data:', data);
+
+        // Add 'content' key and map '_id' to 'id' for consistency
+        const updatedDrawings = data.map(drawing => ({
+          ...drawing,
+          id: drawing._id, // Map '_id' to 'id' for consistency
+          content: `http://localhost:3000/api/blob/${drawing._id}`, // Use '_id' here
+        }));
+
+        setDrawings(updatedDrawings);
+        setLoading(false);
+        console.log('Updated Drawings:', updatedDrawings);
+        
+      } catch (error) {
+        setError(error.message);
         setLoading(false);
       }
     }
 
     fetchDrawings();
   }, []);
+   
 
-  // Update columns when drawings change (assign all drawings to column1)
+  // Prepare initial column data once drawings are fetched
+  const initialColumnsData = {
+    column1: drawings, // All drawings are initially in 'column1'
+    column2: [], 
+  };
+  const handleColumnsChange = (updatedColumns) => {
+    setColumns(updatedColumns);
+  };
+
+//   const handleSaveOrder = () => {
+//     setOrderedIds(drawings.map((d) => d._id));
+//     console.log('Order saved:', drawings.map((d) => d._id));
+//     alert('Image order has been saved!');
+//   };
+
+const handleSaveOrder = () => {
+    // Extract page IDs from column2
+    const column2PageIds = columns.column2.map((drawing) => drawing.id);
+    setOrderedIds(column2PageIds);
+    console.log('Order saved:', column2PageIds);
+    // alert('Image order in Column 2 has been saved!');
+  };
+
   useEffect(() => {
-    setColumns((prevColumns) => ({
-      ...prevColumns,
-      column1: drawings,
-    }));
-  }, [drawings]);
-
-  // Handle drag end event
-const handleDragEnd = (event) => {
-  const { active, over } = event;
-
-  if (!over) return;
-
-  const activeColumn = findColumn(active.id);
-  const overColumn = findColumn(over.id);
-
-  if (!activeColumn || !overColumn) return;
-
-  // Prevent moving items within the image-drop-area if desired
-  if (activeColumn.id === 'image-drop-area' && overColumn.id === 'image-drop-area') {
-    return;
-  }
-
-  // Moving to image-drop-area
-  if (overColumn.id === 'image-drop-area') {
-    setColumns((prevColumns) => {
-      const sourceItems = Array.from(prevColumns[activeColumn.id]);
-      const targetItems = Array.from(prevColumns['image-drop-area']);
-
-      const sourceIndex = sourceItems.findIndex(item => item._id === active.id);
-      if (sourceIndex === -1) return prevColumns;
-
-      const [movedItem] = sourceItems.splice(sourceIndex, 1);
-      targetItems.push(movedItem);
-
-      return {
-        ...prevColumns,
-        [activeColumn.id]: sourceItems,
-        'image-drop-area': targetItems,
-      };
-    });
-    return;
-  }
-
-  // Reordering within the same column
-  if (activeColumn.id === overColumn.id) {
-    const oldIndex = activeColumn.items.findIndex(item => item._id === active.id);
-    const newIndex = overColumn.items.findIndex(item => item._id === over.id);
-
-    if (oldIndex !== newIndex) {
-      setColumns((prevColumns) => ({
-        ...prevColumns,
-        [activeColumn.id]: arrayMove(prevColumns[activeColumn.id], oldIndex, newIndex),
-      }));
+    if (columns && columns.column2) {
+      handleSaveOrder();
     }
-    return;
-  }
+    // You can add more dependencies if needed
+  }, [columns.column2]);
 
-  // Optional: Handle moving between other columns if applicable
-};
-  // Helper function to find which column an item belongs to
-const findColumn = (id) => {
-  for (const [columnId, items] of Object.entries(columns)) {
-    if (items.find(item => item._id === id)) {
-      console.log(`Item ${id} found in column ${columnId}`);
-      return { id: columnId, items };
-    }
-  }
-  console.warn(`Item ${id} not found in any column`);
-  return { id: null, items: [] };
-};
-  // Render loading or error states
-  if (loading) return <p>Loading drawings...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="display-drawing-container">
-        {/* Existing Column */}
-        <Droppable theuniqueIdentifier="column1">
-          <SortableContext
-            items={columns.column1.map(item => item._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            <div className="sortable-column">
-              {columns.column1.map((blob) => (
-                <SortableItem
-                  key={blob._id}
-                  id={blob._id}
-                  pictureName={blob.pictureName}
-                  imageUrl={`http://localhost:3000/api/blob/${blob._id}`}
-                />
-              ))}
-            </div>
-          </SortableContext>
-        </Droppable>
+    <div>
+           {/* <div className="save-order-button-container">
+        <button onClick={handleSaveOrder} className="save-order-button">
+          Save Order
+        </button>
+      </div> */}
 
-        {/* New Droppable Area for Images */}
-        <Droppable theuniqueIdentifier="image-drop-area">
-          <SortableContext
-            items={columns['image-drop-area'].map(item => item._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            <div className="image-drop-area sortable-column">
-              {columns['image-drop-area'].length === 0 && (
-                <p className="image-drop-placeholder">Drop images here</p>
-              )}
-              {columns['image-drop-area'].map((blob) => (
-                <SortableItem
-                  key={blob._id}
-                  id={blob._id}
-                  pictureName={blob.pictureName}
-                  imageUrl={`http://localhost:3000/api/blob/${blob._id}`}
-                />
-              ))}
-            </div>
-          </SortableContext>
-        </Droppable>
-      </div>
-    </DndContext>
+      {loading && <p>Loading drawings...</p>}
+      {error && <p>Error: {error}</p>}
+      {!loading && !error && drawings.length > 0 && (
+        <BookDrager initialColumns={initialColumnsData }   setColumns={handleColumnsChange} />
+      )}
+      {!loading && !error && drawings.length === 0 && (
+        <p>No drawings available.</p>
+      )}
+      {/* Additional UI components can go here */}
+    </div>
   );
 }

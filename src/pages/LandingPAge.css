@@ -131,6 +131,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 /* Form Container */
@@ -168,4 +169,11 @@
   .form-container {
     max-width: 800px; /* Further increase for larger screens */
   }
-} */
+} *
+
+.Repostion {
+  display: absolute;
+  justify-content: center;
+  align-items: center;
+  height: 45vh;
+}

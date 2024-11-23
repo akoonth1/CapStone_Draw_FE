@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { BrowserRouter as Router } from 'react-router-dom';
 import { BookProvider } from './components/BookContext';
+// import { TextProvider } from './components/TextContext';
 
 
 createRoot(document.getElementById('root')).render(
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
       <BookProvider>
+        {/* <TextProvider> */}
         <App />
+        {/* </TextProvider> */}
       </BookProvider>
     </Router>
   </StrictMode>,

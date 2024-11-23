@@ -11,15 +11,28 @@
   color: white;
   cursor: grab;
 }
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: auto;
+  justify-content: Top;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 5px;
+  width: 400px;
+}
 
-  .board {
-    display: flex;
-    /* flex-wrap: wrap; */
-    width: 320px;
-    margin: 0 auto;
-    flex-direction: column;
-  }
+.sortable-item-input {
+  width: 250px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  margin-top: 164px;
 
-  .gray-square:active {
-    cursor: grabbing;
-  }
+}
+
+.sortable-item-input:focus {
+  border-bottom: 2px solid #007bff;
+}

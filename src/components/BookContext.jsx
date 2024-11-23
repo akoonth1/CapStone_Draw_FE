@@ -1,23 +1,8 @@
-// import React, { createContext, useState } from 'react';
-
-
-
-// export const BookContext = createContext();
-
-// const BookProvider = (children) => {
-//     const [pages, setPages] = useState([]);
-
-//     return (
-//         <BookContext.Provider value={{pages, setPages}}>
-//             {children}
-//         </BookContext.Provider>
-//     );
-// };
-// export  default BookProvider;
-
 // BookContext.jsx
 
 import React, { createContext, useState } from 'react';
+import { TextProvider } from './TextContext'; // Ensure correct import
+import TextContext from './TextContext'; // Ensure correct import
 
 // Create the BookContext
 const BookContext = createContext();
@@ -29,12 +14,13 @@ export function BookProvider({ children }) {
   const value = {
     orderedIds,
     setOrderedIds,
-    // You can add more context values or functions here if needed
   };
 
   return (
     <BookContext.Provider value={value}>
-      {children}
+      <TextProvider>
+        {children}
+      </TextProvider>
     </BookContext.Provider>
   );
 }

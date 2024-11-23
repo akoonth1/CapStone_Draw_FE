@@ -12,6 +12,7 @@ function ControlledCarousel() {
   const { orderedIds } = useContext(BookContext);
     const [books, setBooks] = useState([]);
     const [selectedBookId, setSelectedBookId] = useState('');
+    const [bookText, setBookText] = useState([]);
 
 
 //   console.log(orderedIds);
@@ -50,6 +51,7 @@ function ControlledCarousel() {
         }
         const data = await response.json();
         setBooks(data);
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +69,10 @@ useEffect(() => {
             throw new Error(`Error fetching pages for book ID ${selectedBookId}: ${response.status}`);
         }
         const data = await response.json();
-        setDrawings(data);
+        setDrawings(data[0].PagesArray);
+        console.log(data[0]);
+        setBookText(data[0].TextArray);
+        console.log(data[0].TextArray);
         } catch (error) {
         console.error(error);
         }
@@ -78,7 +83,10 @@ useEffect(() => {
 }, [selectedBookId]);
 
 
-
+const getTextById = (id) => {
+  const textObj = bookText.find((item) => item.id === id);
+  return textObj ? textObj.text : console.log('No text available.');
+};
 
 
   // Fetch images for each drawing ID
@@ -138,6 +146,7 @@ return images.length > 0 ? (
           />
           <Carousel.Caption>
             <h3>Drawing ID: {id}</h3>
+            <p>{getTextById(id)}</p>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
