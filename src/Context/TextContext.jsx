@@ -1,25 +1,36 @@
 // TextContext.jsx
 
-import React, { createContext, useState } from 'react';
+// src/Context/TextContext.js
 
-// Create the TextContext
+import React, { createContext, useState, useEffect } from 'react';
+
 const TextContext = createContext();
 
-// Create the TextProvider component
-export function TextProvider({ children }) {
-  const [textData, setTextData] = useState([]); // State to store ID and text pairs
+export const TextProvider = ({ children }) => {
+  const [textData, setTextData] = useState(() => {
+    try {
+      const savedTextData = localStorage.getItem('textData');
+      return savedTextData ? JSON.parse(savedTextData) : {};
+    } catch (error) {
+      console.error('Error parsing textData from localStorage:', error);
+      return {};
+    }
+  });
 
-  const value = {
-    textData,
-    setTextData,
-    // You can add more context values or functions here if needed
-  };
+  // Save textData to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('textData', JSON.stringify(textData));
+    } catch (error) {
+      console.error('Error saving textData to localStorage:', error);
+    }
+  }, [textData]);
 
   return (
-    <TextContext.Provider value={value}>
+    <TextContext.Provider value={{ textData, setTextData }}>
       {children}
     </TextContext.Provider>
   );
-}
+};
 
 export default TextContext;

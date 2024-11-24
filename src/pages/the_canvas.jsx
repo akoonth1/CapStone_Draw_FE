@@ -20,8 +20,7 @@ export default function TheCanvas({
   const [pictureName, setPictureName] = useState('');
 
   const {user} = useContext(AuthContext);
-  const userId = user.user.id;
-  console.log('User ID:', userId);
+ 
 
   console.log('id:', id);// Null when creating new image, otherwise contains the image ID
 

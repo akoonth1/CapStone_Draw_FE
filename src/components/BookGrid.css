@@ -1,0 +1,29 @@
+/* BookGrid.css */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  background-color: #f9f9f9; /* Optional: Add a background color for better visibility */
+}
+
+.grid-item {
+  background-color: #ffffff; /* Optional: Add a background color for each grid item */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.grid-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

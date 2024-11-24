@@ -252,17 +252,34 @@
 import React, { useState, useEffect, useContext } from 'react';
 import BookDrager from './BookDrager'; // Ensure the correct import path
 import  BookContext from '../Context/BookContext'; // Adjust the import path as needed
+import TextContext from '../Context/TextContext';
 
 export default function DisplayDrawing({ id, pictureName, imageUrl }) {
   const [drawings, setDrawings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columns, setColumns] = useState({ column1: [], column2: [] }); // Initialize columns
+
+
+  //  const [columns, setColumns] = useState(() => {
+  //   const savedColumns = localStorage.getItem('columnsData');
+  //   return savedColumns ? JSON.parse(savedColumns) : {
+  //     column1: drawings,
+  //     column2: [],
+  //   };
+  // });
+
+  const initialColumnsData = {
+    column1: drawings,
+    column2: [],
+  };
+  const savedColumns = localStorage.getItem('columnsData');
+console.log(savedColumns);
 
   const [pages, setPages] = useState([]);
 
   // Consume the BookContext
   const { orderedIds, setOrderedIds } = useContext(BookContext);
+  const  {textData, setTextData} = useContext(TextContext);
 
   useEffect(() => {
     // Fetch drawings from the API
@@ -300,11 +317,12 @@ export default function DisplayDrawing({ id, pictureName, imageUrl }) {
   }, []);
    
 
-  // Prepare initial column data once drawings are fetched
-  const initialColumnsData = {
-    column1: drawings, // All drawings are initially in 'column1'
-    column2: [], 
-  };
+  // Save columns to localStorage whenever it changes
+  // useEffect(() => {
+  //   localStorage.setItem('columnsData', JSON.stringify(columns));
+  // }, [columns]);
+
+  
   const handleColumnsChange = (updatedColumns) => {
     setColumns(updatedColumns);
   };
@@ -323,12 +341,12 @@ const handleSaveOrder = () => {
     // alert('Image order in Column 2 has been saved!');
   };
 
-  useEffect(() => {
-    if (columns && columns.column2) {
-      handleSaveOrder();
-    }
-    // You can add more dependencies if needed
-  }, [columns.column2]);
+  // useEffect(() => {
+  //   if (columns && columns.column2) {
+  //     handleSaveOrder();
+  //   }
+  //   // You can add more dependencies if needed
+  // }, [columns.column2]);
 
 
   return (
@@ -342,7 +360,7 @@ const handleSaveOrder = () => {
       {loading && <p>Loading drawings...</p>}
       {error && <p>Error: {error}</p>}
       {!loading && !error && drawings.length > 0 && (
-        <BookDrager initialColumns={initialColumnsData }   setColumns={handleColumnsChange} />
+        <BookDrager initialColumns={initialColumnsData}   setColumns={handleColumnsChange} />
       )}
       {!loading && !error && drawings.length === 0 && (
         <p>No drawings available.</p>

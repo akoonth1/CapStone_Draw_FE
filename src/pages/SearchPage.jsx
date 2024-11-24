@@ -2,6 +2,8 @@ import React from 'react'
 import DisplayDrawing from '../components/DisplayDrawing'
 import FullList from '../components/FullList'
 import BookDrager from '../components/BookDrager'
+import BookGrid from '../components/BookGrid'
+
 export default function SearchPage() {
     const displayDrawingContainerStyle = {
         display: 'flex',
@@ -20,6 +22,7 @@ export default function SearchPage() {
                 <DisplayDrawing />
                 {/* <BookDrager initialColumns={initialColumnsData} /> */}
             </div>
+            {/* <BookGrid /> */}
         </div>
     );
 }

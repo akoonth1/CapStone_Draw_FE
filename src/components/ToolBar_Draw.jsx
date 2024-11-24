@@ -31,6 +31,7 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
   };
 
 
+
   return (
     <div className="toolbar">
       <h4>ToolBar_Draw</h4>
@@ -106,6 +107,16 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
         >
           🩹 Eraser
         </button>
+
+        {/* <button
+          className={`tool-button ${selectedTool === 'eyedropper' ? 'active' : ''}`}
+          onClick={() => handleToolChange('eyedropper')}
+          aria-label="Select Eyedropper Tool"
+        >
+          🔍 Eyedropper
+        </button> */}
+
+
       </div>
 
 

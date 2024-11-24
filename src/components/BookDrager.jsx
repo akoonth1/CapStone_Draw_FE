@@ -18,9 +18,17 @@ import {
 import Column from './Column'; // Ensure correct import path
 import './DisplayDrawing.css';
 import StoryBoard from './StoryBoard';
+
+
 function BookDrager({ initialColumns, setColumns }) {
+
+  
+
+
   // Initialize state for columns from props
   const [columnsState, setColumnsState] = useState(initialColumns);
+
+  
 
 
   // Initialize sensors

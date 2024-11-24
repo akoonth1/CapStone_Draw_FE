@@ -18,6 +18,7 @@ import LandingPage from './pages/LandingPage';
 console.log(import.meta.env.VITE_SOME_KEY) 
 function App() {
     const {id} = useParams();
+    //localStorage.clear();
   return (
     <>
         <Navbar />
