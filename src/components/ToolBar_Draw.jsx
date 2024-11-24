@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ToolBar.css';
+import {ntc} from "color-namer"
 
 export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityChange, onToolChange }) {
   const [brushColor, setBrushColor] = useState('#000000');
   const [brushSize, setBrushSize] = useState(10);
   const [brushOpacity, setBrushOpacity] = useState(1);
   const [selectedTool, setSelectedTool] = useState('brush'); // 'brush' or 'eraser'
+  const [colors, setColors] = useState([]);
+
+  const selectedColor = brushColor;
 
   const handleColorChange = (event) => {
     setBrushColor(event.target.value);
     onColorChange(event.target.value);
   };
-  const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'white', 'black'];
-
+  
   const handleSizeChange = (event) => {
     const size = parseInt(event.target.value, 10);
     setBrushSize(size);
@@ -29,9 +32,20 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
     setSelectedTool(tool);
     onToolChange(tool);
   };
+  useEffect(() => {
+    // Initialize the color palette
+    GetColorPalette();
+  }, []);
 
- async function GetColorPalette() {
-  try{
+
+
+  const handleColorSelection = (color) => {
+    onColorChange(color); // Notify parent of color change
+  };
+
+
+async function GetColorPalette() {
+  try {
     const response = await fetch('http://localhost:3000/color/color', {
       method: 'GET',
       headers: {
@@ -39,20 +53,38 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
       },
     });
     const data = await response.json();
-    console.log(data);
-    return data;
-  
-  }
-  catch (error) {
+    console.log('Raw data:', data);
+
+    // Extract the result array
+    const rgbArray = data.result;
+ // Convert RGB arrays to HEX color strings
+const colorHexStrings = rgbArray.map((rgb) => {
+  const [r, g, b] = rgb;
+  return (
+    '#' +
+    [r, g, b]
+      .map((x) => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      })
+      .join('')
+  );
+});
+
+console.log('Color HEX Strings:', colorHexStrings);
+
+// Update the state with the HEX color strings
+setColors(colorHexStrings);
+
+
+  } catch (error) {
     console.error('Get Color Palette error:', error);
     alert(`Get Color Palette failed: ${error.message}`);
   }
-  };
-
-GetColorPalette();
+}
 
 
-
+// const colornames = Palette.map((color) => color.name);
 
 
 
@@ -86,7 +118,7 @@ GetColorPalette();
 
     
       {/* Color Selection Circles */}
-      <div className="color-options">
+      {/* <div className="color-options">
         {colors.map((color) => (
           <div
             key={color}
@@ -103,7 +135,7 @@ GetColorPalette();
             }}
           ></div>
         ))}
-      </div>
+      </div> */}
 
 
       <label>Brush Opacity</label>
@@ -142,8 +174,20 @@ GetColorPalette();
 
 
       </div>
-
-
+      <div className="color-palette">
+        {colors.map((color, index) => (
+          <button
+            key={index}
+            style={{
+              backgroundColor: color,
+              border:
+                color === selectedColor ? '2px solid #000' : '1px solid #ccc',
+            }}
+            onClick={() => handleColorSelection(color)}
+            className="color-button"
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -19,12 +19,17 @@ export default function WrappedCanvas() {
       // Or ensure the canvas loads the correct image from localStorage
     }
   }, [id]);
+  const handleColorChange = (color) => {
+    setBrushColor(color);
+  };
+
+  
 
   return (
     <>
     <div className='Wrapper'>
       <ToolBar_Draw
-        onColorChange={setBrushColor}
+        onColorChange={handleColorChange}
         onSizeChange={setBrushSize}
         onOpacityChange={setBrushOpacity}
         onToolChange={setSelectedTool}
