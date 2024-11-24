@@ -19,7 +19,14 @@ export default function TheCanvas({
 
   const [pictureName, setPictureName] = useState('');
 
-  const {user} = useContext(AuthContext);
+  const {user, cookies} = useContext(AuthContext);
+
+  console.log('user:', user);
+  console.log('cookies:', cookies);
+  if (user) {
+    console.log('user:', user.user.id);
+  }
+ 
  
 
   console.log('id:', id);// Null when creating new image, otherwise contains the image ID
@@ -231,16 +238,18 @@ const handleSave = () => {
 
         });
       } else {
-
+        
 
         // **Creating Mode: Save new image**
 
         const formData = new FormData();
         formData.append('file', blob, `${pictureName || 'untitled'}.png`); // 'file' is the key your backend expects
-        if (userId) {
-        formData.append('userId', userId);
+        if (user) {
+        formData.append('userId', user.user.id);
+ 
         }
-        console.log(formData);
+        console.log(formData.get('userId'));
+    
         response = await fetch('http://localhost:3000/api/blob/', {
           method: 'POST',
           body: formData,

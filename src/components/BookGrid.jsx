@@ -87,6 +87,7 @@ const goRead = () => {
           }
     
           alert('Book has been deleted successfully!');
+          window.location.reload();
     
           // Refresh the list of book covers after deletion
           // Ensure fetchCovers is defined in the scope or adjust accordingly
@@ -124,7 +125,37 @@ const goRead = () => {
     //   }
     // }
 
-
+    const goEdit = async (BookID) => {
+      const confirmed = window.confirm('Are you sure you want to edit this canvas?');
+      if (!confirmed) return;
+      console.log('goEdit', BookID);
+  
+      try {
+        const response = await fetch(`http://localhost:3000/books/book/${BookID}`, {
+          method: 'GET',
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const book = await response.json();
+        console.log('Fetched Book:', book);
+        console.log('PagesArray:', book.PagesArray);
+        console.log('TextArray:', book.TextArray);
+  
+        // Store PagesArray and TextArray in localStorage
+        localStorage.setItem('columnsData', JSON.stringify(book.PagesArray));
+        localStorage.setItem('textData', JSON.stringify(book.TextArray));
+        console.log('PagesArray and TextArray have been stored in localStorage.');
+  
+        // Optionally, navigate to the editing page
+        // navigate('/edit'); // Uncomment if you have a route for editing
+  
+      } catch (error) {
+        console.error('Error fetching book:', error);
+      }
+    };
     
   return (
     <div className="grid-container">

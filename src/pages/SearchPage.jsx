@@ -22,7 +22,7 @@ export default function SearchPage() {
                 <DisplayDrawing />
                 {/* <BookDrager initialColumns={initialColumnsData} /> */}
             </div>
-            {/* <BookGrid /> */}
+            <BookGrid />
         </div>
     );
 }

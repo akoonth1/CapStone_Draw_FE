@@ -13,12 +13,13 @@ import { useParams } from 'react-router-dom';
 import { BookProvider } from './Context/BookContext';
 import BookConstructor from './pages/BookCOnstructor';
 import LandingPage from './pages/LandingPage';
+import ProtectedRoutes from './Protected_Route/ProtectedRouter';
 
 
 console.log(import.meta.env.VITE_SOME_KEY) 
 function App() {
     const {id} = useParams();
-    //localStorage.clear();
+    // localStorage.clear();
   return (
     <>
         <Navbar />
@@ -32,7 +33,10 @@ function App() {
         <Route path="/storyboard" element={<StoryBoard />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/findDrawing" element={<FindDrawing />} />
+
+        <Route element={<ProtectedRoutes />}>
         <Route path="/book" element={<BookConstructor />} />
+        </Route>
 
       </Routes>
 

@@ -20,13 +20,13 @@ import './DisplayDrawing.css';
 import StoryBoard from './StoryBoard';
 
 
-function BookDrager({ initialColumns, setColumns }) {
+function BookDrager({ columns, setColumns }) {
 
   
 
 
   // Initialize state for columns from props
-  const [columnsState, setColumnsState] = useState(initialColumns);
+  const [columnsState, setColumnsState] = useState(columns);
 
   
 

@@ -13,7 +13,17 @@ export default function Navbar() {
   const handleLogout = () => {
     logout();
     navigate('/landing');
-  }
+}
+const resetLocalStorage = () => {
+  localStorage.removeItem('columnsData');
+  localStorage.removeItem('textData');
+  // setColumns(initialColumnsData);
+  // setTextData({});
+  console.log('Local storage has been cleared.');
+};
+
+
+
     return (
   
         <nav>
@@ -26,7 +36,7 @@ export default function Navbar() {
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
             <li><Link to="/book">Book</Link></li>
             <li><button onClick={handleLogout}>Logout</button></li>
-
+            <button onClick={resetLocalStorage}>Reset Data</button>
           </ul>
         </nav>
     );

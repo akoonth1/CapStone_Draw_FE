@@ -5,31 +5,61 @@ import BookContext from '../Context/BookContext';
 import TextContext from '../Context/TextContext';
 import SearchPage from './SearchPage';
 import { StoryBoard } from '../components/StoryBoard';
+import  AuthContext  from '../Context/auth_context';
 
 export default function BookConstructor() {
   const { orderedIds } = useContext(BookContext);
   const { textData } = useContext(TextContext); 
   const [title, setTitle] = useState('');
   const [PagesArray, setPagesArray] = useState([]);
-
+  const {user, cookies} = useContext(AuthContext);
+ 
+  if (user) {
+    console.log('user:', user.user.id);
+  }
+ 
   // Function to save the book by posting to the API
 async function SaveBook(title, PagesArray, TextArray) {
+
+
+  const requestData = {
+    title,
+    PagesArray,
+    TextArray,
+    // Conditionally add 'createdBy' if 'user' exists
+    // Use spread syntax to conditionally add properties to the object
+    ...(user ? { createdBy: user.user.id } : {}),
+  };
+
+  // Convert the object to a JSON string
+  const requestbody = JSON.stringify(requestData);
+
+
+console.log('requestbody:', requestbody);
+
   try {
-    const response = await fetch('http://localhost:3000/books/book', {
+
+ 
+    const response = await fetch('http://localhost:3000/books/book', 
+      {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        title,
-        PagesArray,
-        TextArray
-      }),
+
+      body:  requestbody
    
     });
-    console.log('title:', title),
-      console.log('PagesArray:', PagesArray),
-      console.log('TextArray:', TextArray),
+
+
+
+
+
+    // console.log('title:', title),
+    //   console.log('PagesArray:', PagesArray),
+    //   console.log('TextArray:', TextArray),
+    //   console.log('createdBy:', user.user.id);
+    
     // Log the response for debugging
     console.log('Response:', response);
 

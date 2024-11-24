@@ -92,10 +92,13 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     removeCookie('token', { path: '/' });
+    console.log('User has been logged out.');
+    console.log(user);
+    
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, login, logout }}>
+    <AuthContext.Provider value={{ user, cookies, signUp, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
