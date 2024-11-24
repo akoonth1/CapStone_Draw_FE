@@ -11,7 +11,7 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
     setBrushColor(event.target.value);
     onColorChange(event.target.value);
   };
-  const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'white'];
+  const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'white', 'black'];
 
   const handleSizeChange = (event) => {
     const size = parseInt(event.target.value, 10);
@@ -29,6 +29,30 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
     setSelectedTool(tool);
     onToolChange(tool);
   };
+
+ async function GetColorPalette() {
+  try{
+    const response = await fetch('http://localhost:3000/color/color', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  
+  }
+  catch (error) {
+    console.error('Get Color Palette error:', error);
+    alert(`Get Color Palette failed: ${error.message}`);
+  }
+  };
+
+GetColorPalette();
+
+
+
 
 
 
