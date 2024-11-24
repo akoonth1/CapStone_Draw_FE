@@ -10,7 +10,7 @@ import SearchPage from './pages/SearchPage';
 import FindDrawing from './components/SingleImageLoader';
 import WrappedCanvas from './pages/WrappedCanvas';
 import { useParams } from 'react-router-dom';
-import { BookProvider } from './components/BookContext';
+import { BookProvider } from './Context/BookContext';
 import BookConstructor from './pages/BookCOnstructor';
 import LandingPage from './pages/LandingPage';
 

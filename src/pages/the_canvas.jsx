@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useContext} from 'react';
 import './canvas.css';
-import BookContext from '../components/BookContext'; // Import BookContext
+import BookContext from '../Context/BookContext'; // Import BookContext
+import AuthContext from '../Context/auth_context';
 
 export default function TheCanvas({ 
     id,
@@ -18,7 +19,11 @@ export default function TheCanvas({
 
   const [pictureName, setPictureName] = useState('');
 
-  console.log('id:', id);
+  const {user} = useContext(AuthContext);
+  const userId = user.user.id;
+  console.log('User ID:', userId);
+
+  console.log('id:', id);// Null when creating new image, otherwise contains the image ID
 
     // History stack for undo functionality
     const historyRef = useRef([]);
@@ -232,8 +237,11 @@ const handleSave = () => {
         // **Creating Mode: Save new image**
 
         const formData = new FormData();
-        formData.append('file', blob, `${pictureName}.png`); // 'file' is the key your backend expects
-  
+        formData.append('file', blob, `${pictureName || 'untitled'}.png`); // 'file' is the key your backend expects
+        if (userId) {
+        formData.append('userId', userId);
+        }
+        console.log(formData);
         response = await fetch('http://localhost:3000/api/blob/', {
           method: 'POST',
           body: formData,

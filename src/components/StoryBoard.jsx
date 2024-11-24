@@ -10,8 +10,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import './Story.css';
-import BookContext from './BookContext';
-import TextContext from './TextContext';
+import BookContext from '../Context/BookContext';
+import TextContext from '../Context/TextContext';
 
 export function StoryBoard({ ids }) {
 

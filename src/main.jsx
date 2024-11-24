@@ -5,7 +5,7 @@ import App from './App.jsx'
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { BrowserRouter as Router } from 'react-router-dom';
-import { BookProvider } from './components/BookContext';
+import { BookProvider } from './Context/BookContext.jsx';
 // import { TextProvider } from './components/TextContext';
 
 

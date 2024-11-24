@@ -35,7 +35,7 @@ function BookCoverCarousel() {
    // Example output
    // [{"_id":"673f5929a5b708247327f137","title":"book2","firstPageElement":"673ebc4628e3c5f25a250e02"},{"_id":"673f6aeb8dee31ac1ecdb600","title":"book3","firstPageElement":"673ebc0d28e3c5f25a250dfc"},{"_id":"673f6baf827a8b4705c2d938","title":"book4","firstPageElement":"673ebc0d28e3c5f25a250dfc"},{"_id":"673f7f2d827a8b4705c2d9d9","title":"book5","firstPageElement":"673ebc0d28e3c5f25a250dfc"},{"_id":"673f8566827a8b4705c2da65","title":"book6","firstPageElement":"673ebc0d28e3c5f25a250dfc"},{"_id":"673f88101ea53fc69aba1b29","title":"book7","firstPageElement":"673ebc0d28e3c5f25a250dfc"}]
 
-  console.log(covers[1]);
+  // console.log(covers[1]);
   
     // Fetch images for each drawing ID
   
@@ -72,19 +72,19 @@ function BookCoverCarousel() {
     }, [covers]);
     
 
-  console.log(images);
+  // console.log(images);
   
   return images.length > 0 ? (
       <>
   
       <Carousel activeIndex={index} onSelect={handleSelect}>
         {images.map(({ id, imageUrl,title }) => (
-          <Carousel.Item key={id}>
+          <Carousel.Item key={id} style={{borderRadius: '8px'}}>
             <img
               className="d-block w-100"
               src={imageUrl}
               alt={`Cover ${title}`}
-              style={{ maxHeight: '250px', objectFit: 'contain' }}
+              style={{ maxHeight: '250px', objectFit: 'contain', borderRadius: '8px' }}
             />
             <Carousel.Caption>
               <h3>{title}</h3>

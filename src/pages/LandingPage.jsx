@@ -1,22 +1,102 @@
 import backgroundImage from '../assets/backgroundimage.jpg'
 // LandingPage.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './LandingPage.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom'; 
 import BookCoverCarousel from '../components/BookCover';
-
+import AuthContext from '../Context/auth_context';  
+import BookContext from '../Context/BookContext';
 
 export default function LandingPage() {
+
+  const { signUp, login } = useContext(AuthContext); // Destructure signUp and login from AuthContext
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Sign-Up
+  //const { signUp, login } = useAuth(); // Destructure signUp and login from useAuth()
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    if (!isLogin) {
+      // Sign-Up Logic
+      const name = e.target.username.value.trim();
+    const password = e.target.password.value;
+      const email = e.target.email.value.trim();
+
+      if (!name || !email || !password) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      await signUp(name, password, email);
+
+      // Optionally check if sign-up was successful before navigating
+      // navigate('/draw');
+
+    } else {
+      // Login Logic
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
+
+      if (!email || !password) {
+        alert('Please enter both email and password.');
+        return;
+      }
+
+      await login({ email, password });
+
+      // Optionally check if login was successful before navigating
+      navigate('/draw');
+    }
+
+    // Reset form fields after submission
+    e.target.reset();
   };
+
+
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!isLogin) {
+  //     const name = e.target.username.value;
+  //     const email = e.target.email.value;
+  //     const password = e.target.password.value; 
+      // async function signUp() {
+      //   try {
+      //     const response = await fetch('http://localhost:3000/users/user', {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       body: JSON.stringify({ name, password, email }),
+      //     });
+      //     const data = await response.json();
+
+      //     if (!response.ok) {
+      //       throw new Error(data.message);
+      //     }
+      //     // console.log('Sign Up:', data);
+      //     else{
+      //       alert('Sign Up Successful');
+      //       navigate('/draw');
+
+      //     }
+
+      //   } catch (error) {
+      //     console.error('Failed to sign up:', error);
+      //     alert('Failed to sign up:', error);
+      //   }
+      // }
+    //   signUp();
+    // }
+
+    // Handle form submission logic here
+  // };
 
   return (
     <div className="landing-page">

@@ -1,8 +1,8 @@
 // BookConstructor.jsx
 
 import { useState, useContext } from 'react';
-import BookContext from '../components/BookContext';
-import TextContext from '../components/TextContext';
+import BookContext from '../Context/BookContext';
+import TextContext from '../Context/TextContext';
 import SearchPage from './SearchPage';
 import { StoryBoard } from '../components/StoryBoard';
 

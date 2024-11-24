@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import BookContext from '../components/BookContext';
+import BookContext from '../Context/BookContext';
 
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 //https://react-bootstrap.netlify.app/docs/components/carousel/

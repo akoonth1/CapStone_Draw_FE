@@ -1,10 +1,19 @@
-import React from 'react';
+import {useContext}from 'react';
 import './navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+
+
+import AuthContext from '../Context/auth_context'; // Adjust the import path as needed
 
 
 export default function Navbar() {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate('/landing');
+  }
     return (
   
         <nav>
@@ -16,6 +25,8 @@ export default function Navbar() {
             <li><Link to="/search">Search</Link></li>
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
             <li><Link to="/book">Book</Link></li>
+            <li><button onClick={handleLogout}>Logout</button></li>
+
           </ul>
         </nav>
     );

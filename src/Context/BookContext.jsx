@@ -3,7 +3,7 @@
 import React, { createContext, useState } from 'react';
 import { TextProvider } from './TextContext'; // Ensure correct import
 import TextContext from './TextContext'; // Ensure correct import
-
+import {AuthProvider} from './auth_context';
 // Create the BookContext
 const BookContext = createContext();
 
@@ -18,9 +18,12 @@ export function BookProvider({ children }) {
 
   return (
     <BookContext.Provider value={value}>
+      <AuthProvider>
       <TextProvider>
         {children}
       </TextProvider>
+      </AuthProvider>
+      
     </BookContext.Provider>
   );
 }
