@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       console.log(name, email, password);
       console.log(JSON.stringify({ name, password, email }));
       console.log(JSON.stringify({ name,  email, password }));
-      const response = await fetch('http://localhost:3000/users/user', {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/users/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
   // Existing login function
   const login = async (formData) => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/user', {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/auth/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
     removeCookie('token', { path: '/' });
     console.log('User has been logged out.');
     console.log(user);
-    
+
   };
 
   return (

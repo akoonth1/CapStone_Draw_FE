@@ -7,7 +7,7 @@ export default function FullList({ onSelect }) {
   useEffect(() => {
     async function getDrawingsList() {  
       try {
-        const response = await fetch('http://localhost:3000/api/blobslist');
+        const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blobslist`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -16,7 +16,7 @@ export default function FullList({ onSelect }) {
         // Fetch picture name for each id
         const drawingsWithNames = await Promise.all(
           ids.map(async (id) => {
-            const nameResponse = await fetch(`http://localhost:3000/api/blob/${id}/pictureName`);
+            const nameResponse = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${id}/pictureName`);
             if (!nameResponse.ok) {
               throw new Error(`Error fetching picture name for id ${id}`);
             }

@@ -46,7 +46,7 @@ export default function ToolBar_Draw({ onColorChange, onSizeChange, onOpacityCha
 
 async function GetColorPalette() {
   try {
-    const response = await fetch('http://localhost:3000/color/color', {
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/color/color`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

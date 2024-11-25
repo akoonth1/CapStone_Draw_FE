@@ -27,7 +27,7 @@ export default function UserPage() {
 
   async function getUser(id) {
     try {
-      const response = await fetch(`http://localhost:3000/users/user/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/users/user/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function UserPage() {
 
   async function handleSave() {
     try {
-      const response = await fetch(`http://localhost:3000/users/user/${user.user.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/users/user/${user.user.id}`, {
         method: 'PUT', // or 'PATCH' based on your API
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export default function UserPage() {
 
     async function handleDelete() { 
     try {
-      const response = await fetch(`http://localhost:3000/users/user/${user.user.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/users/user/${user.user.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

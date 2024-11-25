@@ -19,7 +19,7 @@ function BookCoverCarousel() {
       // Fetch book titles from the API
       async function fetchCovers() {
         try {
-          const response = await fetch('http://localhost:3000/books/booklistcovers');
+          const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/booklistcovers`);
           if (!response.ok) {
             throw new Error(`Error fetching book titles: ${response.status}`);
           }
@@ -44,7 +44,7 @@ function BookCoverCarousel() {
         try {
           const imagePromises = covers.map(async (cover) => {
             try {
-              const response = await fetch(`http://localhost:3000/api/blob/${cover.firstPageElement}`);
+              const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${cover.firstPageElement}`);
               if (!response.ok) {
                 throw new Error(`Error fetching image for ID ${cover.firstPageElement}: ${response.status}`);
               }

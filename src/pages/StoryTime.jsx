@@ -25,7 +25,7 @@ function ControlledCarousel() {
 //    useEffect(() => {
 //     async function fetchDrawingIDs() {
 //       try {
-//         const response = await fetch('http://localhost:3000/api/blobslist');
+//         const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blobslist`);
 //         if (!response.ok) {
 //           throw new Error(`Error fetching drawing IDs: ${response.status}`);
 //         }
@@ -45,7 +45,7 @@ function ControlledCarousel() {
     // Fetch book titles from the API
     async function fetchBookTitles() {
       try {
-        const response = await fetch('http://localhost:3000/books/booklist');
+        const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/booklist`);
         if (!response.ok) {
           throw new Error(`Error fetching book titles: ${response.status}`);
         }
@@ -64,7 +64,7 @@ function ControlledCarousel() {
 useEffect(() => {
     async function fetchPages() {
         try {
-        const response = await fetch(`http://localhost:3000/books/booklist/${selectedBookId}`);
+        const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/booklist/${selectedBookId}`);
         if (!response.ok) {
             throw new Error(`Error fetching pages for book ID ${selectedBookId}: ${response.status}`);
         }
@@ -108,7 +108,7 @@ const getTextById = (id) => {
       try {
         const imagePromises = drawings.map(async (id) => {
           try {
-            const response = await fetch(`http://localhost:3000/api/blob/${id}`);
+            const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${id}`);
             if (!response.ok) {
               throw new Error(`Error fetching image for ID ${id}: ${response.status}`);
             }
@@ -157,8 +157,8 @@ return images.length > 0 ? (
             style={{ maxHeight: '80vh', objectFit: 'contain' }}
           />
           <Carousel.Caption>
-            <h3>Drawing ID: {id}</h3>
-            <p>{getTextById(id)}</p>
+            {/* <h3>Drawing ID: {id}</h3> */}
+            <h3>{getTextById(id)}</h3>
           </Carousel.Caption>
         </Carousel.Item>
       ))}

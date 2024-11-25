@@ -188,7 +188,7 @@ const saveCanvasToLocalStorage = () => {
       // Fetch the pictureName if id exists
       async function fetchPictureName() {
         try {
-          const response = await fetch(`http://localhost:3000/api/blob/${id}/pictureName`);
+          const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${id}/pictureName`);
           if (!response.ok) {
             throw new Error(`Error fetching picture name: ${response.statusText}`);
           }
@@ -232,7 +232,7 @@ const handleSave = () => {
         formData.append('contentType', blob.type);                   
         formData.append('pictureName', pictureName.trim());         
 
-        response = await fetch(`http://localhost:3000/api/blob/${id}`, {
+        response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${id}`, {
           method: 'PUT',
           body: formData,
 
@@ -250,7 +250,7 @@ const handleSave = () => {
         }
         console.log(formData.get('userId'));
     
-        response = await fetch('http://localhost:3000/api/blob/', {
+        response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/`, {
           method: 'POST',
           body: formData,
 
@@ -334,7 +334,7 @@ const handleSave = () => {
     //           const formData = new FormData();
     //           formData.append('image', blob, `${pictureName || 'canvas'}_${Date.now()}.png`);
     
-    //           const response = await fetch('http://localhost:3000/api/blob', {
+    //           const response = await fetch('${import.meta.env.VITE_BE_URL}/api/blob', {
     //             method: 'POST',
     //             body: formData,
     //           });
@@ -370,7 +370,7 @@ const handleSave = () => {
               const formData = new FormData();
               formData.append('file', blob, `${pictureName}clone.png`);
               
-              const response = await fetch('http://localhost:3000/api/blob', {
+              const response = await fetch('${import.meta.env.VITE_BE_URL}/api/blob', {
                 method: 'POST',
                 body: formData,
               });

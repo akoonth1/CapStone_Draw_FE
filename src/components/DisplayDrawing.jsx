@@ -69,7 +69,7 @@
 //   // Fetch drawings from the API
 //   async function fetchDrawings() {
 //     try {
-//       const response = await fetch('http://localhost:3000/api/blobs');
+//       const response = await fetch('${import.meta.env.VITE_BE_URL}/api/blobs');
 
 //       if (!response.ok) {
 //         throw new Error(`HTTP error! status: ${response.status}`);
@@ -84,7 +84,7 @@
 //       const updatedDrawings = data.map(drawing => ({
 //         ...drawing,
 //         id: drawing._id, // **Uncommented:** Map '_id' to 'id'
-//         content: `http://localhost:3000/api/blob/${drawing._id}`, // Use '_id' here
+//         content: `${import.meta.env.VITE_BE_URL}/api/blob/${drawing._id}`, // Use '_id' here
 //       }));
 
 //       setDrawings(updatedDrawings);
@@ -109,7 +109,7 @@
 // // useEffect(() => {
 // //     async function fetchPages() {
 // //         try {
-// //         const response = await fetch(`http://localhost:3000/books/booklist/${selectedBookId}`);
+// //         const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/booklist/${selectedBookId}`);
 // //         if (!response.ok) {
 // //             throw new Error(`Error fetching pages for book ID ${selectedBookId}: ${response.status}`);
 // //         }
@@ -204,7 +204,7 @@
 //               key={blob._id}
 //               id={blob._id}
 //               pictureName={blob.pictureName}
-//               imageUrl={`http://localhost:3000/api/blob/${blob._id}`}
+//               imageUrl={`${import.meta.env.VITE_BE_URL}/api/blob/${blob._id}`}
 //             />
 //           ))}
 //         </div>
@@ -220,7 +220,7 @@
 //                 key={blob._id}
 //                 id={blob._id}
 //                 pictureName={blob.pictureName}
-//                 imageUrl={`http://localhost:3000/api/blob/${blob._id}`}
+//                 imageUrl={`${import.meta.env.VITE_BE_URL}/api/blob/${blob._id}`}
 //               />
 //             ))}
 //           </div>
@@ -309,7 +309,7 @@ console.log(initialColumnsData)
     // Fetch drawings from the API
     async function fetchDrawings() {
       try {
-        const response = await fetch('http://localhost:3000/api/blobs');
+        const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blobs`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -324,7 +324,7 @@ console.log(initialColumnsData)
         const updatedDrawings = data.map(drawing => ({
           ...drawing,
           id: drawing._id, // Map '_id' to 'id' for consistency
-          content: `http://localhost:3000/api/blob/${drawing._id}`, // Use '_id' here
+          content: `${import.meta.env.VITE_BE_URL}/api/blob/${drawing._id}`, // Use '_id' here
         }));
 
         setDrawings(updatedDrawings);

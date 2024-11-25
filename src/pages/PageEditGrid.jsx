@@ -30,7 +30,7 @@ const [editTitle, setEditTitle] = useState(book ? book.title : '');
 
   async function fetchBook() {
     try {
-      const response = await fetch(`http://localhost:3000/books/book/${bookId}`);
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/${bookId}`);
       if (!response.ok) {
         throw new Error(`Error fetching book: ${response.status}`);
       }
@@ -55,7 +55,7 @@ const [editTitle, setEditTitle] = useState(book ? book.title : '');
       const imagePromises = pages.map(async (page) => {
         console.log(page);
         try {
-          const response = await fetch(`http://localhost:3000/api/blob/${page}`);
+          const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${page}`);
           if (!response.ok) {
             throw new Error(`Error fetching image for page ID ${page}: ${response.status}`);
           }
@@ -126,7 +126,7 @@ async function handleSavePage(pageId) {
   setTextArray(updatedTextArray);
   // Send a PUT request to update TextArray on the server
   try {
-    const response = await fetch(`http://localhost:3000/books/book/${bookId}/textarray`, {
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/${bookId}/textarray`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -189,7 +189,7 @@ async function handleDeletePage(pageId) {
   setTextArray(updatedTextArray);
 
   try {
-    const response = await fetch(`http://localhost:3000/books/booklist/${bookId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/booklist/${bookId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ async function handleSaveTitle() {
 
   // Step 2: Send a PUT request to update the title on the server
   try {
-    const response = await fetch(`http://localhost:3000/books/book/${bookId}/title`, {
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/${bookId}/title`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -40,7 +40,7 @@ console.log('requestbody:', requestbody);
   try {
 
  
-    const response = await fetch('http://localhost:3000/books/book', 
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book`, 
       {
       method: 'POST',
       headers: {
@@ -136,7 +136,7 @@ console.log('requestbody:', requestbody);
 //   // Function to save the book by posting to the API
 //   async function SaveBook(title, PagesArray, textData) {
 //     try {
-//       const response = await fetch('http://localhost:3000/books/book', {
+//       const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book`, {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',

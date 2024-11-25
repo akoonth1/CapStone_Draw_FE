@@ -10,7 +10,7 @@ export default function FindDrawing() {
     if (selectedId) {
       const fetchImage = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/api/blob/${selectedId}`);
+          const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -35,7 +35,7 @@ export default function FindDrawing() {
         if (!confirmed) return;
     
     try {
-      const response = await fetch(`http://localhost:3000/api/blob/${selectedId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
@@ -57,7 +57,7 @@ export default function FindDrawing() {
         if (!confirmed) return;
     
         try {
-          const response = await fetch(`http://localhost:3000/api/blob/${selectedId}`, {
+          const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`, {
             method: 'GET',
           });
           if (!response.ok) {
