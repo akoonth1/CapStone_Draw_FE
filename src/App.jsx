@@ -11,7 +11,7 @@ import FindDrawing from './components/SingleImageLoader';
 import WrappedCanvas from './pages/WrappedCanvas';
 import { useParams } from 'react-router-dom';
 import { BookProvider } from './Context/BookContext';
-import BookConstructor from './pages/BookCOnstructor';
+import BookConstructor from './pages/BookConstructor';
 import LandingPage from './pages/LandingPage';
 import UserPage from './pages/UserPage';
 import PageGrid from './pages/PageEditGrid';
