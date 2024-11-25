@@ -118,7 +118,7 @@ setColors(colorHexStrings);
 
     
       {/* Color Selection Circles */}
-      {/* <div className="color-options">
+      <div className="color-options">
         {colors.map((color) => (
           <div
             key={color}
@@ -135,7 +135,7 @@ setColors(colorHexStrings);
             }}
           ></div>
         ))}
-      </div> */}
+      </div>
 
 
       <label>Brush Opacity</label>

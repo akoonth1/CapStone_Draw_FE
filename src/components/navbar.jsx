@@ -35,6 +35,7 @@ const resetLocalStorage = () => {
             <li><Link to="/search">Search</Link></li>
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
             <li><Link to="/book">Book</Link></li>
+            <li><Link to="/user">User</Link></li>
             <li><button onClick={handleLogout}>Logout</button></li>
             <button onClick={resetLocalStorage}>Reset Data</button>
           </ul>

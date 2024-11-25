@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { BookProvider } from './Context/BookContext';
 import BookConstructor from './pages/BookCOnstructor';
 import LandingPage from './pages/LandingPage';
+import UserPage from './pages/UserPage';
 import ProtectedRoutes from './Protected_Route/ProtectedRouter';
 
 
@@ -36,6 +37,7 @@ function App() {
 
         <Route element={<ProtectedRoutes />}>
         <Route path="/book" element={<BookConstructor />} />
+        <Route path="/user" element={<UserPage />} />
         </Route>
 
       </Routes>

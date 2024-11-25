@@ -143,10 +143,12 @@ const goRead = () => {
         console.log('Fetched Book:', book);
         console.log('PagesArray:', book.PagesArray);
         console.log('TextArray:', book.TextArray);
+        console.log(localStorage.getItem('columnsData'));
+        console.log(localStorage.getItem('textData'));
   
         // Store PagesArray and TextArray in localStorage
-        localStorage.setItem('columnsData', JSON.stringify(book.PagesArray));
-        localStorage.setItem('textData', JSON.stringify(book.TextArray));
+        // localStorage.setItem('columnsData', JSON.stringify(book.PagesArray));
+        // localStorage.setItem('textData', JSON.stringify(book.TextArray));
         console.log('PagesArray and TextArray have been stored in localStorage.');
   
         // Optionally, navigate to the editing page
