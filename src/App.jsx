@@ -14,6 +14,7 @@ import { BookProvider } from './Context/BookContext';
 import BookConstructor from './pages/BookCOnstructor';
 import LandingPage from './pages/LandingPage';
 import UserPage from './pages/UserPage';
+import PageGrid from './pages/PageEditGrid';
 import ProtectedRoutes from './Protected_Route/ProtectedRouter';
 
 
@@ -34,6 +35,8 @@ function App() {
         <Route path="/storyboard" element={<StoryBoard />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/findDrawing" element={<FindDrawing />} />
+
+        <Route path="/pageEditor/:bookId" element={<PageGrid />} />
 
         <Route element={<ProtectedRoutes />}>
         <Route path="/book" element={<BookConstructor />} />

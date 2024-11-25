@@ -98,66 +98,45 @@ const goRead = () => {
         }
       };
     
-    //   const goEdit = async(BookID) => {
-    //     const confirmed = window.confirm('Are you sure you want to edit this canvas?');
-    //     if (!confirmed) return;
-    //     console.log('goEdit', BookID);
-
-    //     try {
-    //         const response = await fetch(`http://localhost:3000/books/book/${BookID}`, {
-    //           method: 'GET',
-    //         });
-    //         if (!response.ok) {
-    //           throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-    //         const book = await response.json();
-    //         console.log(book);
-    //         console.log(book.PagesArray);
-    //         console.log(book.TextArray);
-    //         console.log(localStorage.getItem('columnsData'));
-            
-    //         // const savedColumns = localStorage.getItem('columnsData');
-    //         // const savedTextData = localStorage.getItem('textData');
+ 
+    // const goEdit = async (BookID) => {
+    //   const confirmed = window.confirm('Are you sure you want to edit this canvas?');
+    //   if (!confirmed) return;
+    //   console.log('goEdit', BookID);
+  
+    //   try {
+    //     const response = await fetch(`http://localhost:3000/books/book/${BookID}`, {
+    //       method: 'GET',
+    //     });
+  
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
     //     }
-    //     catch (error) {
-    //       console.error('Error fetching book:', error);
-
+  
+    //     const book = await response.json();
+    //     console.log('Fetched Book:', book);
+    //     console.log('PagesArray:', book.PagesArray);
+    //     console.log('TextArray:', book.TextArray);
+    //     console.log(localStorage.getItem('columnsData'));
+    //     console.log(localStorage.getItem('textData'));
+  
+    //     // Store PagesArray and TextArray in localStorage
+    //     // localStorage.setItem('columnsData', JSON.stringify(book.PagesArray));
+    //     // localStorage.setItem('textData', JSON.stringify(book.TextArray));
+    //     console.log('PagesArray and TextArray have been stored in localStorage.');
+  
+    //     // Optionally, navigate to the editing page
+    //     // navigate('/edit'); // Uncomment if you have a route for editing
+  
+    //   } catch (error) {
+    //     console.error('Error fetching book:', error);
     //   }
-    // }
+    // };
 
     const goEdit = async (BookID) => {
-      const confirmed = window.confirm('Are you sure you want to edit this canvas?');
-      if (!confirmed) return;
-      console.log('goEdit', BookID);
-  
-      try {
-        const response = await fetch(`http://localhost:3000/books/book/${BookID}`, {
-          method: 'GET',
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-  
-        const book = await response.json();
-        console.log('Fetched Book:', book);
-        console.log('PagesArray:', book.PagesArray);
-        console.log('TextArray:', book.TextArray);
-        console.log(localStorage.getItem('columnsData'));
-        console.log(localStorage.getItem('textData'));
-  
-        // Store PagesArray and TextArray in localStorage
-        // localStorage.setItem('columnsData', JSON.stringify(book.PagesArray));
-        // localStorage.setItem('textData', JSON.stringify(book.TextArray));
-        console.log('PagesArray and TextArray have been stored in localStorage.');
-  
-        // Optionally, navigate to the editing page
-        // navigate('/edit'); // Uncomment if you have a route for editing
-  
-      } catch (error) {
-        console.error('Error fetching book:', error);
-      }
-    };
+
+      navigate(`/pageEditor/${BookID}`);
+    }
     
   return (
     <div className="grid-container">

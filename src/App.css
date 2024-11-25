@@ -52,3 +52,11 @@
   flex-direction: row;
   align-items: center;
 }
+
+.pages-array-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
