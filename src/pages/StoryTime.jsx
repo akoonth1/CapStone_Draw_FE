@@ -12,7 +12,7 @@ function ControlledCarousel() {
   const { orderedIds } = useContext(BookContext);
     const [books, setBooks] = useState([]);
     const [selectedBookId, setSelectedBookId] = useState('');
-    const [bookText, setBookText] = useState([]);
+    const [bookText, setBookText] = useState({});
 
 
 //   console.log(orderedIds);
@@ -83,9 +83,21 @@ useEffect(() => {
 }, [selectedBookId]);
 
 
+// const getTextById = (id) => {
+//   console.log(bookText);
+//   console.log(bookText[0][id]);
+//   console.log(id);
+//   const textObj = bookText.find((item) => item.id === id);
+//   console.log(textObj);
+//   return textObj ? textObj.text : console.log('No text available.');
+// };
 const getTextById = (id) => {
-  const textObj = bookText.find((item) => item.id === id);
-  return textObj ? textObj.text : console.log('No text available.');
+  if (bookText && bookText[0][id]) {
+    return bookText[0][id];
+  } else {
+    console.log('No text available for ID:', id);
+    return 'No text available.';
+  }
 };
 
 

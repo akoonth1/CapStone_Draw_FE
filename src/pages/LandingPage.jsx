@@ -10,7 +10,7 @@ import BookContext from '../Context/BookContext';
 
 export default function LandingPage() {
 
-  const { signUp, login } = useContext(AuthContext); // Destructure signUp and login from AuthContext
+  const { signUp, login, user, logout } = useContext(AuthContext); // Destructure signUp and login from AuthContext
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Sign-Up
   //const { signUp, login } = useAuth(); // Destructure signUp and login from useAuth()
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function LandingPage() {
 
       await login({ email, password });
 
-      // Optionally check if login was successful before navigating
+      // if login was successful navigating
       navigate('/draw');
     }
 
@@ -60,43 +60,6 @@ export default function LandingPage() {
 
 
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!isLogin) {
-  //     const name = e.target.username.value;
-  //     const email = e.target.email.value;
-  //     const password = e.target.password.value; 
-      // async function signUp() {
-      //   try {
-      //     const response = await fetch('http://localhost:3000/users/user', {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //       },
-      //       body: JSON.stringify({ name, password, email }),
-      //     });
-      //     const data = await response.json();
-
-      //     if (!response.ok) {
-      //       throw new Error(data.message);
-      //     }
-      //     // console.log('Sign Up:', data);
-      //     else{
-      //       alert('Sign Up Successful');
-      //       navigate('/draw');
-
-      //     }
-
-      //   } catch (error) {
-      //     console.error('Failed to sign up:', error);
-      //     alert('Failed to sign up:', error);
-      //   }
-      // }
-    //   signUp();
-    // }
-
-    // Handle form submission logic here
-  // };
 
   return (
     <div className="landing-page">
@@ -106,39 +69,43 @@ export default function LandingPage() {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="overlay">
-          <div className="form-container">
-            <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
-            <form onSubmit={handleSubmit}>
-              {!isLogin && (
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" id="username" name="username" required />
-                </div>
-              )}
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                />
-              </div>
-              <button type="submit" className="submit-button">
-                {isLogin ? 'Login' : 'Sign Up'}
-              </button>
-            </form>
-            <p className="toggle-text">
-              {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
-              <span onClick={handleToggle}>
-                {isLogin ? 'Sign Up' : 'Login'}
-              </span>
-            </p>
+        <div className="form-container">
+      <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+      <form onSubmit={handleSubmit}>
+        {/* Show Username field only for Sign Up */}
+        {!isLogin && (
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" name="username" required />
           </div>
+        )}
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <button type="submit" className="submit-button">
+          {isLogin ? 'Login' : 'Sign Up'}
+        </button>
+      </form>
+      <p className="toggle-text">
+        {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
+        <span
+          onClick={handleToggle}
+          style={{ cursor: 'pointer', color: 'blue' }}
+        >
+          {isLogin ? 'Sign Up' : 'Login'}
+        </span>
+      </p>
+    </div>
           <BookCoverCarousel className='Reposition'/>
         </div>
     
