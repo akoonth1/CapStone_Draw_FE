@@ -184,7 +184,7 @@ import backgroundImage from '../assets/backgroundimage.jpg'
 // LandingPage.jsx
 
 import React, { useState, useContext } from 'react';
-import './landingpage.css'
+import './frontpage.css';
 import { useNavigate } from 'react-router-dom'; 
 import BookCoverCarousel from '../components/BookCover';
 import AuthContext from '../Context/auth_context';  
