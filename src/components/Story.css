@@ -2,7 +2,7 @@
 
 .storyboard-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 30px;
   padding: 20px;
   margin: 20px;

@@ -16,7 +16,7 @@ export default function SearchPage() {
 
     return (
         <div className='the_search_page'>
-            <h1>Search Page</h1>
+            {/* <h1>Search Page</h1> */}
             {/* <FullList /> */}
             <div style={displayDrawingContainerStyle}>
                 <DisplayDrawing />

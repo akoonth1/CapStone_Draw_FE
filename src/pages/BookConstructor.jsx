@@ -101,12 +101,12 @@ console.log('requestbody:', requestbody);
         onChange={(e) => setTitle(e.target.value)}
       />
       <button onClick={handleSave}>Save Book</button>
-      <h2>Ordered Image IDs:</h2>
+      {/* <h2>Ordered Image IDs:</h2>
       <ul>
         {orderedIds.map((id) => (
           <li key={id}>{id}</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
     <div>
     <SearchPage />
