@@ -35,7 +35,7 @@ const resetLocalStorage = () => {
             {/* <li><Link to="/storyboard">Storyboard</Link></li> */}
             {/* <li><Link to="/search">Search</Link></li> */}
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
-            <li><Link to="/book">Book</Link></li>
+            <li><Link to="/book">Book Maker</Link></li>
                   {!user ? (
               <div></div>
             ) : (

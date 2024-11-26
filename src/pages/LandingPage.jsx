@@ -310,7 +310,7 @@ console.log(user)
         </button>
       </form>
       <p className="toggle-text">
-        {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
+        {isLogin ? "Don't have an account?" : 'Have an account?'}{' '}
         <span
           onClick={handleToggle}
           style={{ cursor: 'pointer', color: 'blue' }}
