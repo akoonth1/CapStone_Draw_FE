@@ -174,7 +174,7 @@ setColors(colorHexStrings);
 
 
       </div>
-      <div className="color-palette">
+      <div className="color-options">
         {colors.map((color, index) => (
           <button
             key={index}
