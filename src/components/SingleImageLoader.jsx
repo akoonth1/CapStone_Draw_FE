@@ -49,6 +49,7 @@ export default function FindDrawing() {
       console.error('Error deleting image:', error);
     
     }
+    window.location.reload();
     }
 
   

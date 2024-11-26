@@ -368,7 +368,7 @@ const handleSave = () => {
           if (blob) {
             try {
               const formData = new FormData();
-              formData.append('file', blob, `${pictureName}clone.png`);
+              formData.append('file', blob, `${pictureName.replace(/\.png$/, '')}clone.png`);
               
               const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob`, {
                 method: 'POST',
