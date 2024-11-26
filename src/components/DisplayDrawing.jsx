@@ -10,14 +10,7 @@ export default function DisplayDrawing({ id, pictureName, imageUrl }) {
   const [error, setError] = useState(null);
 
 
-  //  const [columns, setColumns] = useState(() => {
-  //   const savedColumns = localStorage.getItem('columnsData');
-  //   return savedColumns ? JSON.parse(savedColumns) : {
-  //     column1: drawings,
-  //     column2: [],
-  //   };
-  // });
-   // localStorage.clear();
+
   const initialColumnsData = {
     column1: drawings,
     column2: [],

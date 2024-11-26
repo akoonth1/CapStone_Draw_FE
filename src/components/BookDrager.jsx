@@ -151,6 +151,7 @@ function BookDrager({ columns, setColumns }) {
 
 
   return (
+    <div className='rowed'>
     <DndContext
       sensors={sensors}
       collisionDetection={rectIntersection}
@@ -172,6 +173,7 @@ function BookDrager({ columns, setColumns }) {
       <StoryBoard ids={columnsState.column2.map((item) => item.id)} />
       </div>
     </DndContext>
+    </div>
   );
 }
 

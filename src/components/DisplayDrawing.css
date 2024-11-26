@@ -67,3 +67,7 @@
 .sortable-item:active {
   cursor: grabbing;
 }
+
+/* .rowed {
+  flex-direction: row;
+} */

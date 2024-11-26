@@ -23,7 +23,7 @@ const Column = ({ id, tasks, onContentChange }) => {
         minHeight: '100px',
       }}
     >
-      <h2>{id.toUpperCase()}</h2>
+      <h2>{}</h2>
       <SortableContext
         items={tasks.map((task) => task.id)}
         strategy={verticalListSortingStrategy}
