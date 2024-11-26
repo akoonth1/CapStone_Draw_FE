@@ -315,7 +315,7 @@ console.log(user)
   ) : (
               <div>
               <div className="welcome-container">
-                <h2>Welcome back{user.user.name}!</h2> {/* Adjust based on your user data structure */}
+                <h2>Welcome back{user.user.name}!</h2> 
                 <button
                   onClick={() => navigate('/user')}
                   className="dashboard-button"

@@ -1,4 +1,3 @@
-// BookDrager.jsx
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,7 +14,7 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import Column from './Column'; // Ensure correct import path
+import Column from './Column';
 import './DisplayDrawing.css';
 import StoryBoard from './StoryBoard';
 
@@ -52,12 +51,12 @@ function BookDrager({ columns, setColumns }) {
 
   // Handle drag start event
   const handleDragStart = (event) => {
-    // You can implement any logic needed on drag start
+   
   };
 
   // Handle drag cancel event
   const handleDragCancel = () => {
-    // You can implement any logic needed on drag cancel
+  
   };
 
   // Handle drag end event

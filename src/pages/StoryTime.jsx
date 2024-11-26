@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import BookContext from '../Context/BookContext';
+import { useParams } from 'react-router-dom';
 
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 //https://react-bootstrap.netlify.app/docs/components/carousel/
@@ -13,7 +14,14 @@ function ControlledCarousel() {
     const [books, setBooks] = useState([]);
     const [selectedBookId, setSelectedBookId] = useState('');
     const [bookText, setBookText] = useState({});
+    const { id } = useParams();
 
+    useEffect(() => {
+      if (id) {
+        setSelectedBookId(id);
+        console.log(id);
+      }
+    }, [id]);
 
 //   console.log(orderedIds);
 
@@ -91,6 +99,8 @@ useEffect(() => {
 //   console.log(textObj);
 //   return textObj ? textObj.text : console.log('No text available.');
 // };
+
+
 const getTextById = (id) => {
   if (bookText && bookText[0][id]) {
     return bookText[0][id];

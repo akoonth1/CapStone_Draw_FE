@@ -1,7 +1,5 @@
 // TextContext.jsx
 
-// src/Context/TextContext.js
-
 import React, { createContext, useState, useEffect } from 'react';
 
 const TextContext = createContext();

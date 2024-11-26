@@ -1,11 +1,11 @@
-/* BookGrid.css */
 
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
   padding: 16px;
-  background-color: #f9f9f9; /* Optional: Add a background color for better visibility */
+  background-color: #d20e0e; /* Optional: Add a background color for better visibility */
+  height: 40vh
 }
 
 .grid-item {
@@ -15,6 +15,7 @@
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  width: 300px
 }
 
 .grid-item:hover {

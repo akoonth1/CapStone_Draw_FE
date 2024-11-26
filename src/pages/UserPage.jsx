@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../Context/auth_context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import BookGrid from '../components/BookGrid';
 //import ChangePassword from '../components/UpdatePassword';
 
 export default function UserPage() {
@@ -181,6 +182,7 @@ UserPageList(id);
 
 
   return (
+    <>
     <div>
       <h1>User Page</h1>
       {user ? (
@@ -217,6 +219,12 @@ UserPageList(id);
       ) : (
         <p>Please log in to view your user page.</p>
       )}
+     
     </div>
+      <br />
+        <h2>Book List</h2>
+        
+<BookGrid />
+    </>
   );
 }

@@ -1,12 +1,17 @@
-/* ToolBar_Draw.css */
 
-/* Container for the toolbar */
 .toolbar {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 250px; /* Adjust as needed */
   background-color: #f9f9f9;
+  position: fixed;
+  height: 250px;
+  left: 50px;
+  padding-left:20px ;
+  z-index: 1;
+  padding-top: 50px;
+
 }
 
 /* Labels styling */
@@ -31,30 +36,7 @@
   margin-top: 10px;
 }
 
-/* Individual color circle */
-.circle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid transparent; /* Default border */
-  transition: border 0.3s, transform 0.3s;
-}
 
-/* Highlighting the selected color circle */
-.circle.selected {
-  border: 2px solid #000; /* Solid border to indicate selection */
-  transform: scale(1.1); /* Slightly enlarge the selected circle */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
-}
-
-/* Optional: Hover effect for color circles */
-.circle:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-
-/* Tool Selection Buttons */
 .tool-options {
     display: flex;
     justify-content: space-between;

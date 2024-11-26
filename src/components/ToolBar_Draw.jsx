@@ -118,7 +118,7 @@ setColors(colorHexStrings);
 
     
       {/* Color Selection Circles */}
-      <div className="color-options">
+      {/* <div className="color-options">
         {colors.map((color) => (
           <div
             key={color}
@@ -135,7 +135,7 @@ setColors(colorHexStrings);
             }}
           ></div>
         ))}
-      </div>
+      </div> */}
 
 
       <label>Brush Opacity</label>
@@ -178,13 +178,13 @@ setColors(colorHexStrings);
         {colors.map((color, index) => (
           <button
             key={index}
-            style={{
-              backgroundColor: color,
-              border:
-                color === selectedColor ? '2px solid #000' : '1px solid #ccc',
+            className={`color-button ${selectedColor === color ? 'selected' : ''}`}
+            style={{ backgroundColor: color }}
+            onClick={() => {
+              handleColorSelection(color);
+              setBrushColor(color);
             }}
-            onClick={() => handleColorSelection(color)}
-            className="color-button"
+            aria-label={`Select color ${color}`}
           />
         ))}
       </div>

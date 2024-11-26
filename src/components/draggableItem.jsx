@@ -1,6 +1,5 @@
-import {useDraggable} from '@dnd-kit/core' // Import useDraggable
-import {CSS} from '@dnd-kit/utilities' // Import CSS      
-
+import {useDraggable} from '@dnd-kit/core' 
+import { motion } from 'framer-motion';
 
 
 export default function DraggableItem({id, children}) {

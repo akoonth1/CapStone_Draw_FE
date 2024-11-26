@@ -1,3 +1,4 @@
+
 import {useContext}from 'react';
 import './navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -32,7 +33,7 @@ const resetLocalStorage = () => {
             <li><Link to="/">Story Time</Link></li>
             <li><Link to="/draw">Draw</Link></li>
             {/* <li><Link to="/storyboard">Storyboard</Link></li> */}
-            <li><Link to="/search">Search</Link></li>
+            {/* <li><Link to="/search">Search</Link></li> */}
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
             <li><Link to="/book">Book</Link></li>
                   {!user ? (

@@ -71,13 +71,13 @@ function App() {
         <Navbar />
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
-        <Route path="/" element={<ControlledCarousel />} />
+        <Route path="/:id?" element={<ControlledCarousel />} />
         <Route
           path="/draw/:id?"
           element={<WrappedCanvas />}
         />
         <Route path="/storyboard" element={<StoryBoard />} />
-        <Route path="/search" element={<SearchPage />} />
+        {/* <Route path="/search" element={<SearchPage />} /> */}
         <Route path="/findDrawing" element={<FindDrawing />} />
 
         <Route path="/pageEditor/:bookId" element={<PageGrid />} />
