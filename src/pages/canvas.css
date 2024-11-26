@@ -11,7 +11,7 @@ canvas {
     /* width: 70vw;
     height: 70vh; */
     /* border: 5px solid rgb(36, 43, 77); */
-    background-color: tomato;
+    background-color: rgb(255, 255, 255);
     border-radius: '15px';
     margin: 10px 10px 10px 270px; /* Top, Right, Bottom, Left */
     padding: 10px;
