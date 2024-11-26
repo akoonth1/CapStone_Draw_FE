@@ -168,7 +168,9 @@ return images.length > 0 ? (
           />
           <Carousel.Caption>
             {/* <h3>Drawing ID: {id}</h3> */}
-            <h3>{getTextById(id)}</h3>
+                     
+        
+            <h3 className="outlined-text">{getTextById(id)}</h3>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
