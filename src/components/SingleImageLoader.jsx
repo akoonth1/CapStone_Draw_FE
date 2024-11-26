@@ -30,28 +30,100 @@ export default function FindDrawing() {
     }
   }, [selectedId]);
 
-    const handleDelete = async () => {
-        const confirmed = window.confirm('Are you sure you want to delete this canvas?');
-        if (!confirmed) return;
-    
-    try {
-      const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    // const handleDelete = async () => {
+    //     const confirmed = window.confirm('Are you sure you want to delete this canvas?');
+    //     if (!confirmed) return;
 
-      setImageData(null);
-      setSelectedId('');
-      alert('Canvas deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting image:', error);
+    //   try {
+    //     const response  = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/PageChecker/${selectedId}`, {
+    //       method: 'GET',
+    //     });
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     const data = await response.json();
+    //     console.log(data);
+    //     return;
+
+    //   } catch (error) {
+    //     console.error('Error fetching image:', error);
+    //     alert('Failed to load the canvas for editing. Please try again.');
+        
+    //   }
+
     
-    }
-    window.location.reload();
+    // try {
+    //   const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`, {
+    //     method: 'DELETE',
+    //   });
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+
+    //   setImageData(null);
+    //   setSelectedId('');
+    //   alert('Canvas deleted successfully.');
+    // } catch (error) {
+    //   console.error('Error deleting image:', error);
+    
+    // }
+    // window.location.reload();
+    // }
+// SingleImageLoader.jsx
+
+const handleDelete = async () => {
+  const confirmed = window.confirm('Are you sure you want to delete this canvas?');
+  if (!confirmed) return;
+
+  try {
+    // Check if related data exists
+
+    try{
+    const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/PageChecker/${selectedId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+
+
+    const data = await response.json();
+    console.log('PageChecker data:', data);
+    console.log(data.message);
+
+    // Assuming the API returns an object with an 'exists' property
+    if (data.message !=='No books found containing the given page.') {
+      alert('Cannot delete the canvas because related data exists.');
+      return; // Abort the delete operation
     }
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } } catch (error) {
+      console.error('Error fetching image:', error);
+      // alert('Failed to load the canvas for editing. Please try again.');
+    }
+    // Proceed to delete since no related data exists
+    const deleteResponse = await fetch(`${import.meta.env.VITE_BE_URL}/api/blob/${selectedId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!deleteResponse.ok) {
+      throw new Error(`Delete failed! status: ${deleteResponse.status}`);
+    }
+
+    alert('Canvas deleted successfully.');
+
+    // navigate('/books');
+  } catch (error) {
+    console.error('Error handling delete:', error);
+    alert('Failed to delete the canvas. Please try again.');
+  }
+};
   
     const handleEdit = async () => {
         const confirmed = window.confirm('Are you sure you want to edit this canvas?');
