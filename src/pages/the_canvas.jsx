@@ -267,11 +267,14 @@ const handleSave = () => {
 
       // Optionally, clear the local storage after saving
       localStorage.removeItem('savedCanvas');
+      window.location.reload();
     } catch (error) {
       console.error('Error saving the canvas:', error);
       alert(`Failed to ${id ? 'update' : 'save'} the canvas. Please try again.`);
     }
   }, 'image/png');
+
+  
 };
 
   const handleReset = () => {
