@@ -283,17 +283,25 @@ console.log(user)
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            id="password2"
-            name="password2"
-            required
-          />
-            <label htmlFor="password">Confirm Password</label>
-          <input
-            type="password"
             id="password"
             name="password"
             required
           />
+
+          
+{!isLogin && (
+  <>
+    <label htmlFor="password2">Confirm Password</label>
+    <input
+      type="password"
+      id="password2"
+      name="password2"
+      required
+    />
+  </>
+)}
+
+
         </div>
         
         <button type="submit" className="submit-button">
