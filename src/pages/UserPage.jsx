@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../Context/auth_context';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+//import ChangePassword from '../components/UpdatePassword';
 
 export default function UserPage() {
   const { user, cookies, logout } = useContext(AuthContext);
@@ -12,8 +13,17 @@ export default function UserPage() {
     email: '',
   });
 
+  const {id} = useParams();
+
     const navigate = useNavigate();
 
+
+
+console.log('userid:', id);
+
+
+
+    
   useEffect(() => {
     console.log('user:', user);
 
@@ -21,7 +31,7 @@ export default function UserPage() {
       getUser(user.user.id); // Pass the ID directly
     } else {
       console.log('User is not logged in or user data is not available.');
-      // Optionally, redirect to login page or display a message
+                //navigate('/landing');
     }
   }, [user]);
 
@@ -90,6 +100,7 @@ export default function UserPage() {
       console.error('Update User error:', error);
       alert(`Update User failed: ${error.message}`);
     }
+    window.location.reload();
   }
 
   function handleInputChange(event) {
@@ -98,6 +109,7 @@ export default function UserPage() {
       ...prevData,
       [name]: value,
     }));
+  
   }
 
     async function handleDelete() { 
@@ -125,6 +137,49 @@ export default function UserPage() {
     }
     }
 
+
+
+async function UserBookList(id){   
+    
+    try{ const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book/by/${id}`)
+    const BookList = await response.json();
+    console.log('BookList:', BookList);
+      }catch (error) {
+        console.error('Error fetching images:', error);
+
+}}
+
+
+
+UserBookList(id);
+
+
+
+async function UserPageList(id){   
+    
+    try{ 
+        const response = await fetch(`${import.meta.env.VITE_BE_URL}/api/blobslist/${id}`)
+    const PageList = await response.json();
+    console.log('PageList:', PageList);
+    console.log('PageList:', PageList[0]);
+    
+    }catch (error) {
+        console.error('Error fetching images:', error);
+
+
+}}
+
+
+
+UserPageList(id);
+
+
+
+
+
+
+
+
   return (
     <div>
       <h1>User Page</h1>
@@ -139,6 +194,7 @@ export default function UserPage() {
             </>
           ) : (
             <div>
+                {/* <ChangePassword /> */}
               <label>Name:</label>
               <input
                 type="text"

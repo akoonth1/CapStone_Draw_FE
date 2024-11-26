@@ -8,7 +8,7 @@ import AuthContext from '../Context/auth_context'; // Adjust the import path as 
 
 
 export default function Navbar() {
-  const { logout } = useContext(AuthContext);
+  const {user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
@@ -22,8 +22,8 @@ const resetLocalStorage = () => {
   console.log('Local storage has been cleared.');
 };
 
-
-
+  // {/* <li><Link to="/pageEditor">Page Editor</Link></li> */}
+  //       {/* <button onClick={resetLocalStorage}>Reset Data</button> */}
     return (
   
         <nav>
@@ -35,11 +35,15 @@ const resetLocalStorage = () => {
             <li><Link to="/search">Search</Link></li>
             <li><Link to="/findDrawing">Find Drawing</Link></li>              
             <li><Link to="/book">Book</Link></li>
-            <li><Link to="/user">User</Link></li>
-            <li><Link to="/pageEditor">Page Editor</Link></li>
-            <li><button onClick={handleLogout}>Logout</button></li>
-            <button onClick={resetLocalStorage}>Reset Data</button>
-          </ul>
+                  {!user ? (
+              <div></div>
+            ) : (
+              <>
+                <li><Link to={`/user/${user.user.id}`}>User</Link></li>
+                <li><button onClick={handleLogout}>Logout</button></li>
+              </>
+            )}
+            </ul>
         </nav>
     );
     }

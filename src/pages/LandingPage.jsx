@@ -209,16 +209,23 @@ export default function LandingPage() {
       const name = e.target.username.value.trim();
     const password = e.target.password.value;
       const email = e.target.email.value.trim();
+      const password2 = e.target.password2.value;
+
 
       if (!name || !email || !password) {
         alert('Please fill in all fields.');
         return;
       }
 
+      if (password !== password2) {
+        alert('Passwords do not match.');
+        return;
+      }
+
       await signUp(name, password, email);
 
       // Optionally check if sign-up was successful before navigating
-      // navigate('/draw');
+      navigate('/draw');
 
     } else {
       // Login Logic
@@ -233,7 +240,8 @@ export default function LandingPage() {
       await login({ email, password });
 
       // if login was successful navigating
-      navigate('/draw');
+      // navigate('/draw');
+      alert('Login successful');
     }
 
     // Reset form fields after submission
@@ -245,6 +253,8 @@ console.log(import.meta.env.VITE_BE_URL +'1');
 //${import.meta.env.VITE_BE_URL}
 //${import.meta.env.VITE_BE_URL}
 
+console.log(user)
+
   return (
     <div className="landing-page">
      
@@ -253,6 +263,8 @@ console.log(import.meta.env.VITE_BE_URL +'1');
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="overlay">
+        {!user ? (
+          <>
         <div className="form-container">
       <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
       <form onSubmit={handleSubmit}>
@@ -271,12 +283,21 @@ console.log(import.meta.env.VITE_BE_URL +'1');
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password2"
+            name="password2"
+            required
+          />
+            <label htmlFor="password">Confirm Password</label>
+          <input
+            type="password"
             id="password"
             name="password"
             required
           />
         </div>
+        
         <button type="submit" className="submit-button">
+
           {isLogin ? 'Login' : 'Sign Up'}
         </button>
       </form>
@@ -290,6 +311,34 @@ console.log(import.meta.env.VITE_BE_URL +'1');
         </span>
       </p>
     </div>
+     </>
+  ) : (
+              <div>
+              <div className="welcome-container">
+                <h2>Welcome back{user.user.name}!</h2> {/* Adjust based on your user data structure */}
+                <button
+                  onClick={() => navigate('/user')}
+                  className="dashboard-button"
+                >
+                  Go to Dashboard
+                </button>
+           
+                <button
+                  onClick={() => logout()
+                    
+                  }
+                  className="logout-button"
+                  
+
+                >
+                  Logout
+                </button>
+              </div>
+              <br></br>
+              </div>
+            )}
+
+
           <BookCoverCarousel className='Reposition'/>
         </div>
     

@@ -392,6 +392,7 @@ const handleSaveOrder = () => {
     setColumns(initialColumnsData);
     setTextData({});
     console.log('Local storage has been cleared.');
+    window.location.reload();
   };
   
 

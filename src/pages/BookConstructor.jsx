@@ -51,10 +51,6 @@ console.log('requestbody:', requestbody);
    
     });
 
-
-
-
-
     // console.log('title:', title),
     //   console.log('PagesArray:', PagesArray),
     //   console.log('TextArray:', TextArray),

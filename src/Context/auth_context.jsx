@@ -30,6 +30,8 @@ export const AuthProvider = ({ children }) => {
       console.log(name, email, password);
       console.log(JSON.stringify({ name, password, email }));
       console.log(JSON.stringify({ name,  email, password }));
+
+      
       const response = await fetch(`${import.meta.env.VITE_BE_URL}/users/user`, {
         method: 'POST',
         headers: {
@@ -98,7 +100,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, cookies, signUp, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, cookies, signUp, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
