@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../Context/auth_context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import BookGrid from '../components/BookGrid';
+import BookGrid from '../components/BookList/BookGrid';
 //import ChangePassword from '../components/UpdatePassword';
 
 export default function UserPage() {

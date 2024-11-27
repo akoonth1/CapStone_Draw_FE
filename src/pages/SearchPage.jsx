@@ -1,8 +1,8 @@
 import React from 'react'
-import DisplayDrawing from '../components/DisplayDrawing'
+import DisplayDrawing from '../components/BookDragNDrop/DisplayDrawing'
 import FullList from '../components/FullList'
-import BookDrager from '../components/BookDrager'
-import BookGrid from '../components/BookGrid'
+import BookDrager from '../components/BookDragNDrop/BookDrager'
+import BookGrid from '../components/BookList/BookGrid'
 
 export default function SearchPage() {
     const displayDrawingContainerStyle = {

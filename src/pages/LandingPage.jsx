@@ -5,7 +5,7 @@ import backgroundImage from '../assets/backgroundimage.jpg'
 import React, { useState, useContext } from 'react';
 import './frontpage.css';
 import { useNavigate } from 'react-router-dom'; 
-import BookCoverCarousel from '../components/BookCover';
+import BookCoverCarousel from '../components/BookList/BookCover';
 import AuthContext from '../Context/auth_context';  
 import BookContext from '../Context/BookContext';
 

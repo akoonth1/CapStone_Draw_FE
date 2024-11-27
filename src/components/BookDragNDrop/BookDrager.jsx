@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import Column from './Column';
 import './DisplayDrawing.css';
-import StoryBoard from './StoryBoard';
+import StoryBoard from '../StoryBoard';
 
 
 function BookDragger({ columns, setColumns }) {

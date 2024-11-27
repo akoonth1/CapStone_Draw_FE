@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import BookDrager from './BookDrager'; // Ensure the correct import path
-import  BookContext from '../Context/BookContext'; // Adjust the import path as needed
-import TextContext from '../Context/TextContext';
+import  BookContext from '../../Context/BookContext'; // Adjust the import path as needed
+import TextContext from '../../Context/TextContext';
 
 export default function DisplayDrawing({ id, pictureName, imageUrl }) {
   const [drawings, setDrawings] = useState([]);
