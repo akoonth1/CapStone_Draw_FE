@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import BookContext from '../Context/BookContext';
 import TextContext from '../Context/TextContext';
 import SearchPage from './SearchPage';
-import { StoryBoard } from '../components/StoryBoard';
+import { StoryBoard } from '../components/BookDragNDrop/StoryBoard';
 import  AuthContext  from '../Context/auth_context';
 
 export default function BookConstructor() {

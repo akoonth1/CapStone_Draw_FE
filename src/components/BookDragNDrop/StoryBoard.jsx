@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useContext } from 'react';
-import BookContext from '../Context/BookContext';
-import TextContext from '../Context/TextContext';
+import BookContext from '../../Context/BookContext';
+import TextContext from '../../Context/TextContext';
 import './Story.css';
 
 export function StoryBoard({ ids }) {

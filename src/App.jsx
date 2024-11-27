@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import './App.css';
 import TheCanvas from './pages/the_canvas';
 import ToolBar_Draw from './components/Tool_bar/ToolBar_Draw';
-import { StoryBoard } from './components/StoryBoard';
+import { StoryBoard } from './components/BookDragNDrop/StoryBoard';
 import ControlledCarousel from './pages/StoryTime';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Navbar from './components/Nav_bar/navbar';
