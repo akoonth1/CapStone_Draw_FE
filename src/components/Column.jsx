@@ -108,7 +108,7 @@ export default Column;
 //         ))}
 //       </SortableContext>
       
-//       {/* Optional: Display last task ID */}
+//   
 //       {/* <p className="last-task-id">
 //         Last Task ID: {tasks.length > 0 ? tasks[tasks.length - 1].id : 'No tasks'}
 //       </p> */}

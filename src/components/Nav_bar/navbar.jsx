@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-import AuthContext from '../Context/auth_context'; // Adjust the import path as needed
+import AuthContext from '../../Context/auth_context'; // Adjust the import path as needed
 
 
 export default function Navbar() {
@@ -15,13 +15,13 @@ export default function Navbar() {
     logout();
     navigate('/landing');
 }
-const resetLocalStorage = () => {
-  localStorage.removeItem('columnsData');
-  localStorage.removeItem('textData');
-  // setColumns(initialColumnsData);
-  // setTextData({});
-  console.log('Local storage has been cleared.');
-};
+// const resetLocalStorage = () => {
+//   localStorage.removeItem('columnsData');
+//   localStorage.removeItem('textData');
+//   // setColumns(initialColumnsData);
+//   // setTextData({});
+//   console.log('Local storage has been cleared.');
+// };
 
   // {/* <li><Link to="/pageEditor">Page Editor</Link></li> */}
   //       {/* <button onClick={resetLocalStorage}>Reset Data</button> */}

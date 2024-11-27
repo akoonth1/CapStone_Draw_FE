@@ -19,7 +19,7 @@ import './DisplayDrawing.css';
 import StoryBoard from './StoryBoard';
 
 
-function BookDrager({ columns, setColumns }) {
+function BookDragger({ columns, setColumns }) {
 
   
 
@@ -177,6 +177,6 @@ function BookDrager({ columns, setColumns }) {
   );
 }
 
-export default BookDrager;
+export default BookDragger;
 
 // onTextChange={handleTextChange} 

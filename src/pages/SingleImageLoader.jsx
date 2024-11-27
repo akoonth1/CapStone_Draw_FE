@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FullList from './FullList';
+import FullList from '../components/FullList';
 import { useNavigate } from 'react-router-dom';
 
 export default function FindDrawing() {

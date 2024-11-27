@@ -6,7 +6,7 @@ nav {
   width: 100%;     /* Makes the navbar span the full width of the viewport */
   background-color: #727272; 
   padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
   z-index: 1000;   /* Ensures the navbar stays above other elements */
 }
 

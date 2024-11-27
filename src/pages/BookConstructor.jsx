@@ -81,7 +81,7 @@ console.log('requestbody:', requestbody);
       const data = await SaveBook(title, orderedIds, textData);
       console.log('Saved Book:', data);
       alert('Book has been saved successfully!');
-      // Optionally, reset the title or provide user feedback here
+    
       
     } catch (error) {
       console.error(error);
@@ -115,116 +115,4 @@ console.log('requestbody:', requestbody);
     </>
 
   );
-}// BookConstructor.jsx
-
-// import React, { useContext, useState, useEffect } from 'react';
-// import TextContext from '../components/TextContext';
-// import BookContext from '../components/BookContext'; // Ensure correct import path
-// import SearchPage from './SearchPage';
-// import { StoryBoard } from '../components/StoryBoard';
-
-// export default function BookConstructor() {
-//   const { orderedIds } = useContext(BookContext);
-//   const {  } = useContext(TextContext); // Destructure textData from TextContext
-//   const [title, setTitle] = useState('');
-
-//   // Function to save the book by posting to the API
-//   async function SaveBook(title, PagesArray, textData) {
-//     try {
-//       const response = await fetch(`${import.meta.env.VITE_BE_URL}/books/book`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           title,
-//           PagesArray,
-//           textData, // Include textData from TextContext
-//         }),
-//       });
-
-//       // Log the response for debugging
-//       console.log('Response:', response);
-
-//       if (!response.ok) {
-//         const errorText = await response.text();
-//         console.error(`Error saving book: ${response.status} - ${errorText}`);
-//         alert(`Error saving book: ${response.status} - ${errorText}`);
-//         throw new Error(`Error saving book: ${response.status}`);
-//       }
-
-//       const data = await response.json();
-//       alert('Book has been saved successfully!');
-//       return data;
-//     } catch (error) {
-//       console.error('Failed to save book:', error);
-//       alert(`Failed to save book: ${error.message}`);
-//       throw error;
-//     }
-//   }
-
-//   // Handler for the Save Book button
-//   const handleSaveBook = () => {
-//     if (!title.trim()) {
-//       alert('Please enter a title for the book.');
-//       return;
-//     }
-
-//     if (orderedIds.length === 0) {
-//       alert('Please add at least one page to the book.');
-//       return;
-//     }
-
-//     // Prepare PagesArray based on orderedIds and textData
-//     const preparedPagesArray = orderedIds.map((id) => {
-//       const page = textData.find((item) => item.id === id);
-//       return {
-//         id,
-//         text: page ? page.text : '',
-//       };
-//     });
-
-//     if (preparedPagesArray.length === 0) {
-//       alert('No text data available to save.');
-//       return;
-//     }
-
-//     console.log('Preparing to save book with the following data:', {
-//       title,
-//       PagesArray: preparedPagesArray,
-//       textData,
-//     });
-
-//     // Call SaveBook with title, preparedPagesArray, and textData
-//     SaveBook(title, preparedPagesArray, textData);
-//   };
-
-//   return (
-//     <div className="container mt-4">
-//       <h2>Create a New Book</h2>
-//       <div className="mb-3">
-//         <label htmlFor="bookTitle" className="form-label">
-//           Book Title
-//         </label>
-//         <input
-//           type="text"
-//           className="form-control"
-//           id="bookTitle"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//           placeholder="Enter book title"
-//         />
-//       </div>
-
-//       {/* StoryBoard Component to manage pages */}
-//       <StoryBoard ids={orderedIds} />
-
-//       <button className="btn btn-primary mt-3" onClick={handleSaveBook}>
-//         Save Book
-//       </button>
-
-//       {/* Optionally include SearchPage or other components */}
-//       <SearchPage />
-//     </div>
-//   );
-// }
+}

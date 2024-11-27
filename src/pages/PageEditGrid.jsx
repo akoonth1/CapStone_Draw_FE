@@ -240,7 +240,7 @@ async function handleSaveTitle() {
     console.error('Error updating title:', error);
     alert(`Failed to update title: ${error.message}`);
 
-    // Optional: Revert the title change in the frontend if the server update fails
+    
     setBook((prevBook) => ({
       ...prevBook,
       title: book.title, // Revert to the original title

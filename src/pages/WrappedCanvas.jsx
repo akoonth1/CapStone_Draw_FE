@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TheCanvas from './the_canvas';
-import ToolBar_Draw from '../components/ToolBar_Draw';
+import ToolBar_Draw from '../components/Tool_bar/ToolBar_Draw';
 import './WrappedCanvas.css';
 
 export default function WrappedCanvas() {
@@ -12,13 +12,14 @@ export default function WrappedCanvas() {
   const [brushOpacity, setBrushOpacity] = useState(1);
   const [selectedTool, setSelectedTool] = useState('brush'); 
 
-  useEffect(() => {
+  useEffect(() => {//What was I trying to do here?
     if (id) {
-      // Optionally, you can load additional data based on the id
-      // For example, fetch brush settings from the server
-      // Or ensure the canvas loads the correct image from localStorage
+    
+      // console.log('Canvas ID:', id);
     }
   }, [id]);
+
+
   const handleColorChange = (color) => {
     setBrushColor(color);
   };

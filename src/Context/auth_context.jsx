@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || 'Sign Up failed');
       }
 
-      // Optionally, automatically log the user in after sign-up
+      
       // Set the token in cookies
       setCookie('token', data.token, { path: '/' });
 

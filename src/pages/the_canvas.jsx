@@ -265,7 +265,7 @@ const handleSave = () => {
       console.log('Success:', result);
       alert(`Canvas has been successfully ${id ? 'updated' : 'saved'}.`);
 
-      // Optionally, clear the local storage after saving
+    
       localStorage.removeItem('savedCanvas');
       window.location.reload();
     } catch (error) {
@@ -284,7 +284,7 @@ const handleSave = () => {
     // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Optionally, fill the canvas with a white background
+    // Fill the canvas with a white background
     context.fillStyle = 'white';
     context.fillRect(0, 0, canvas.width, canvas.height);
 

@@ -37,7 +37,7 @@
     max-width: 400px;
     width: 100%;
     box-sizing: border-box;
-    backdrop-filter: blur(5px); /* Optional: Blur effect */
+    backdrop-filter: blur(5px); 
   }
   
   /* Form Heading */
@@ -139,7 +139,7 @@
     max-width: 600px; 
     width: 100%;
     box-sizing: border-box;
-    backdrop-filter: blur(5px); /* Optional: Blur effect */
+    backdrop-filter: blur(5px); 
   }
   
 

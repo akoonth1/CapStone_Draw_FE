@@ -119,7 +119,7 @@ console.log('userid:', id);
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          // Include authentication headers if necessary
+
           // 'Authorization': `Bearer ${yourAuthToken}`,
         },
       });
@@ -129,7 +129,7 @@ console.log('userid:', id);
       }
 
       alert('User account has been deleted successfully!');
-      // Optionally, log out the user after deleting the account
+  
         logout();
       navigate('/landing');
     } catch (error) {

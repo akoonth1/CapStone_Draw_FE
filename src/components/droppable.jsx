@@ -15,7 +15,7 @@ export default function Droppable({ theuniqueIdentifier, children }) {
     borderRadius: '8px',
     transition: 'border-color 0.3s ease, background-color 0.3s ease',
     minHeight: '150px', // Ensure the droppable area has a minimum height
-    backgroundColor: isOver ? '#e0ffe0' : '#f9f9f9', // Optional: Background color change on hover
+    backgroundColor: isOver ? '#e0ffe0' : '#f9f9f9', // Background color change on hover
   };
 
   return (

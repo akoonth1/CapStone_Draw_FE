@@ -4,12 +4,12 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
   padding: 16px;
-  background-color: #d20e0e; /* Optional: Add a background color for better visibility */
+  background-color: #d20e0e; 
   height: 40vh
 }
 
 .grid-item {
-  background-color: #ffffff; /* Optional: Add a background color for each grid item */
+  background-color: #ffffff; 
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;

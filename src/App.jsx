@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import './App.css';
 import TheCanvas from './pages/the_canvas';
-import ToolBar_Draw from './components/ToolBar_Draw';
+import ToolBar_Draw from './components/Tool_bar/ToolBar_Draw';
 import { StoryBoard } from './components/StoryBoard';
 import ControlledCarousel from './pages/StoryTime';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Navbar from './components/navbar';
+import Navbar from './components/Nav_bar/navbar';
 import SearchPage from './pages/SearchPage';
-import FindDrawing from './components/SingleImageLoader';
+import FindDrawing from './pages/SingleImageLoader';
 import WrappedCanvas from './pages/WrappedCanvas';
 import { useParams } from 'react-router-dom';
 import { BookProvider } from './Context/BookContext';
