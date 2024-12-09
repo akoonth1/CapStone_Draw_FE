@@ -29,8 +29,8 @@ export default function Navbar() {
   
         <nav>
           <ul>
-            <li><Link to="/landing">Landing Page</Link></li>
-            <li><Link to="/">Story Time</Link></li>
+            <li><Link to="/">Landing Page</Link></li>
+            <li><Link to="/StoryTime">Story Time</Link></li>
             <li><Link to="/draw">Draw</Link></li>
             {/* <li><Link to="/storyboard">Storyboard</Link></li> */}
             {/* <li><Link to="/search">Search</Link></li> */}

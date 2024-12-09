@@ -70,7 +70,7 @@ function App() {
     <>
         <Navbar />
       <Routes>
-        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/:id?" element={<ControlledCarousel />} />
         <Route
           path="/draw/:id?"
