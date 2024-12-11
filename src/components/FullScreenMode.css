@@ -1,0 +1,74 @@
+
+
+.fullscreen-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #a397eb;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+
+}
+
+/* .fullscreen-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.flip-book {
+  width: 100%;
+  height: 100%;
+  outline: none; 
+} */
+
+.page {
+  flex: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+} */
+
+.page:focus,
+.flip-book:focus {
+  outline: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+} */
+
+.page:focus,
+.page:active,
+.page-image:focus,
+.page-image:active {
+  outline: none;
+  border: none;
+}
+
+.page,
+.page-image {
+  user-select: none;
+}
+
+/* .flip-book {
+  -webkit-tap-highlight-color: transparent;
+}

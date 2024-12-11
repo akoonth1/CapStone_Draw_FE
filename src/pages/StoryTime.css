@@ -1,12 +1,12 @@
 /* StoryTime.css */
 
-.story-time-container {
+/* .story-time-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  /* border-radius: 15px; */
-}
+  border-radius: 15px;
+} */
 
 .flip-book {
   margin-top: 20px;

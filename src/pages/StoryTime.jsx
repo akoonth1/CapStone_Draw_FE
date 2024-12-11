@@ -4,6 +4,7 @@ import BookContext from '../Context/BookContext';
 import { useParams } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 import './StoryTime.css';
+import FullApp, {FullscreenContext} from '../components/FullScreenMode';
 
 // import ExampleCarouselImage from 'components/ExampleCarouselImage';
 //https://react-bootstrap.netlify.app/docs/components/carousel/
@@ -211,6 +212,8 @@ function StoryTime() {
   const [books, setBooks] = useState([]);
     const [drawings, setDrawings] = useState([]);
   const [images, setImages] = useState([]);
+  
+  const isFullscreen = useContext(FullscreenContext);
 
       const { id } = useParams();
 
@@ -306,51 +309,59 @@ function StoryTime() {
 
 
 
+
   return (
     <div className="story-time-container">
-  <select value={selectedBookId} onChange={handleSelectBook}>
-    <option value="" disabled>
-      -- Choose a Book --
-    </option>
-    {books.map((book) => (
-      <option key={book._id} value={book._id}>           
-        {book.title}
-      </option> /* Added the closing tag */
-    ))}
-  </select>
 
-      {/* Page Flip Book */}
-      {pages.length > 0 && (
-        <HTMLFlipBook
-          width={600}
-          height={400}
-          size="stretch"
-          minWidth={315}
-          maxWidth={1920}
-          minHeight={400}
-          maxHeight={1080}
-          maxShadowOpacity={0.5}
-          showCover={true}
-          mobileScrollSupport={true}
-          className="flip-book"
-        >
-      
-          {pages.map((page, index) => (
-            <div key={index} className="page">
-              <img
-                src={`${import.meta.env.VITE_BE_URL}/api/blob/${page}`}
-                alt={`Page ${index + 1}`}
-                className="page-image"
-              />
-              <div className="page-text">
-                {bookText[0][page]}
-              </div>
-            </div>
+        <select value={selectedBookId} onChange={handleSelectBook}>
+          <option value="" disabled>
+            -- Choose a Book --
+          </option>
+          {books.map((book) => (
+            <option key={book._id} value={book._id}>
+              {book.title}
+            </option>
           ))}
-        </HTMLFlipBook>
-      )}
+        </select>
+        <FullApp>
+        {pages.length > 0 && (
+          <HTMLFlipBook
+            width={isFullscreen ? 600 : 800} // Increase size when not in fullscreen
+            height={isFullscreen ? 400 : 600}
+            size="stretch"
+            minWidth={315}
+            maxWidth={1920}
+            minHeight={400}
+            maxHeight={1080}
+            maxShadowOpacity={0.8}
+            showCover={true}
+            mobileScrollSupport={true}
+            className="flip-book"
+            // useMouseEvents={false} // Disable mouse events if not needed
+            // clickEventForward={false} 
+          >
+            {pages.map((page, index) => (
+              <div key={index} className="page"
+              tabIndex={-1} // Prevent element from receiving focus
+              onMouseDown={(e) => e.preventDefault()} //
+              >
+                <img
+                  src={`${import.meta.env.VITE_BE_URL}/api/blob/${page}`}
+                  alt={`Page ${index + 1}`}
+                  className="page-image"
+                />
+                <div className="page-text">
+                {bookText[0][page]}
+                </div>
+              </div>
+            ))}
+          </HTMLFlipBook>
+        )}
+      </FullApp>
     </div>
   );
 }
 
 export default StoryTime;
+
+

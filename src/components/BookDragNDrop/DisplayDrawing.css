@@ -68,6 +68,6 @@
   cursor: grabbing;
 }
 
-/* .rowed {
+.rowed {
   flex-direction: row;
-} */
+}

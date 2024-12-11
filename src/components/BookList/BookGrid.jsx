@@ -110,9 +110,13 @@ const goRead = (BookID) => {
           <button onClick={() =>goRead(covers[index]._id)}>Read</button>
           <button onClick={() => goDelete(covers[index]._id)}>Delete</button>
           <button onClick={() =>goEdit(covers[index]._id)}>Edit</button>
+          <br/>
+          <br/>
+         <h3>{covers[index].title}</h3> 
            
         </div>
       ))}
+      
     </div>
   );
 }
