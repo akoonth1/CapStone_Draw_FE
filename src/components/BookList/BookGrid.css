@@ -1,21 +1,23 @@
+/* BookGrid.css */
 
+/* Default styles for desktop */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
   padding: 16px;
-  background-color: #d20e0e; 
-  height: 40vh
+  background-color: #d20e0e;
+  border: 5px solid #3a2b04;
 }
 
 .grid-item {
-  background-color: #ffffff; 
-  border: 1px solid #ddd;
+  background-color: #dcd3d3;
+  border: 1px solid #050b10;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-  width: 300px
+  width: 300px;
 }
 
 .grid-item:hover {
@@ -27,4 +29,26 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Tablet view */
+@media (max-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .grid-item {
+    width: 100%;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .grid-item {
+    width: 100%;
+  }
 }
