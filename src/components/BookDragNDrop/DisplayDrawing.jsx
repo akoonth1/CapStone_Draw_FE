@@ -126,7 +126,7 @@ const handleSaveOrder = () => {
     if (columns && columns.column2) {
       handleSaveOrder();
     }
-    // You can add more dependencies if needed
+
   }, [columns.column2]);
 
   const resetLocalStorage = () => {

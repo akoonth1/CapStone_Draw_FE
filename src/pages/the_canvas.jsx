@@ -243,7 +243,7 @@ const handleSave = () => {
         // **Creating Mode: Save new image**
 
         const formData = new FormData();
-        formData.append('file', blob, `${pictureName || 'untitled'}.png`); // 'file' is the key your backend expects
+        formData.append('file', blob, `${pictureName || 'untitled'}.png`); // 'file' is the key 
         if (user) {
         formData.append('userId', user.user.id);
  
@@ -350,7 +350,7 @@ const handleSave = () => {
     //           }
     
     //           const data = await response.json();
-    //           const newImageId = data._id; // Adjust based on your API response
+    //           const newImageId = data._id; 
     
     //           // Update the orderedIds in BookContext
     //           setOrderedIds((prevIds) => [...prevIds, newImageId]);
